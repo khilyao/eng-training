@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>English intensive</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter:regular,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:regular,700, 900"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./sass/main.scss" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-black">
+    <div class="container px-2 mx-auto">
+      <div class="preloader-js">
+        <img
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/12"
+          src="./assets/preloader.gif"
+          alt="Preloader"
+        />
+      </div>
+      <div
+        class="greeting-js hidden w-8/12 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-align-center text-center text-white"
+      >
+        <h1
+          class="title mb-4 text-sm sm:text-4xl sm:mb-8 opacity-0 transition-opacity duration-500 ease-in-out"
+        >
+          Welcome to your English training
+        </h1>
+        <p
+          class="mb-6 text-xs sm:text-3xl sm:mb-20 opacity-0 transition-opacity duration-500 ease-in-out"
+        >
+          This application will allow you to learn English every day, just set
+          yourself a challenge that you must learn for example 20 English words
+          a day. Every day there are new words for you. Just come and add the
+          words you want to learn to your daily challenge. Good luck and don't
+          forget that this is really important to you!
+        </p>
+        <button
+          type="button"
+          class="btn-greeting btn-greeting-js transition-colors inline-block rounded px-3 pb-2 pt-2.5 sm:px-6 sm:pb-3 sm:pt-3.5 text-xs sm:text-base font-bold uppercase leading-normal text-neutral-50 opacity-0 transition transition-opacity duration-300 ease-in-out focus:outline-none focus:ring-0"
+        >
+          Start learning
+        </button>
+      </div>
+    </div>
+    <script src="./js/index.js" type="module"></script>
+    <script src="./js/greeting-section.js" type="module"></script>
+    <script src="./js/app-menu.js" type="module"></script>
+  </body>
+</html>
