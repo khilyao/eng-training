@@ -2,6 +2,7 @@
   "name": "eng-script",
   "version": "1.0.0",
   "description": "",
+  "source": "./src/index.html",
   "author": "",
   "license": "ISC",
   "scripts": {
