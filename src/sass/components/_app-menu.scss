@@ -1,14 +1,7 @@
 .btn-menu {
-  padding: 1em 2em;
-  margin: 0.5em;
-
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   letter-spacing: 0.01em;
-
-  border: 2px solid;
-
-  transition: 0.25s;
 
   &:hover,
   &:focus {
@@ -20,14 +13,33 @@
 
 .btn-start {
   color: $btnStartClr;
+  border-color: $btnStartClr;
 
   &:hover,
   &:focus {
-    box-shadow: 0 0.5em 0.5em -0.4em $btnStartClr;
-    border-color: $btnStartClr;
+    border-color: $btnStartHoverClr;
+    box-shadow: 0 0.5em 0.5em -0.4em $btnStartHoverClr;
   }
 }
 
-.btn-start:hover,
-.btn-start:focus {
+.btn-storage {
+  color: $btnStorageClr;
+  border-color: $btnStorageClr;
+
+  &:hover,
+  &:focus {
+    border-color: $btnStorageHoverClr;
+    box-shadow: 0 0.5em 0.5em -0.4em $btnStorageHoverClr;
+  }
+}
+
+.btn-progress {
+  color: $btnProgressClr;
+  border-color: $btnProgressClr;
+
+  &:hover,
+  &:focus {
+    border-color: $btnProgressHoverClr;
+    box-shadow: 0 0.5em 0.5em -0.4em $btnProgressHoverClr;
+  }
 }
