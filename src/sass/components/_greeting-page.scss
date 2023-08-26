@@ -18,10 +18,6 @@
 
   animation: scale 1s linear 0s infinite alternate none;
 
-  @media screen and (max-width: 640px) {
-    font-size: 10px !important;
-  }
-
   &:hover,
   &:focus {
     background-color: #4a3fe0 !important;

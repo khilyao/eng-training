@@ -22,7 +22,7 @@
   }
 }
 
-.btn-storage {
+.btn-vocabulary {
   color: $btnStorageClr;
   border-color: $btnStorageClr;
 
@@ -42,4 +42,8 @@
     border-color: $btnProgressHoverClr;
     box-shadow: 0 0.5em 0.5em -0.4em $btnProgressHoverClr;
   }
+}
+
+.btn-back {
+  margin-left: 10px;
 }

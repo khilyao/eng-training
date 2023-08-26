@@ -6,6 +6,8 @@ const greetingSectionRefs = {
 };
 const DEFAULT_TIMEOUT_DELAY = 500;
 
+localStorage.removeItem("isGreetingViewed");
+
 isGreetingViewed(hasStorageGreetingProp);
 
 setTimeout(() => {
@@ -21,7 +23,12 @@ function onStartBtnClick() {
   const appMenuRef = document.querySelector(".menu-js");
 
   greetingSectionRefs.greetingBlock.classList.add("hidden");
-  appMenuRef.classList.remove("hidden");
+  greetingSectionRefs.preloader.classList.remove("hidden");
+
+  setTimeout(() => {
+    greetingSectionRefs.preloader.classList.add("hidden");
+    appMenuRef.classList.remove("hidden");
+  }, 200);
 
   localStorage.setItem("isGreetingViewed", true);
 }
