@@ -6,8 +6,6 @@ const greetingSectionRefs = {
 };
 const DEFAULT_TIMEOUT_DELAY = 500;
 
-localStorage.removeItem("isGreetingViewed");
-
 isGreetingViewed(hasStorageGreetingProp);
 
 setTimeout(() => {

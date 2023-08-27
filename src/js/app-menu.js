@@ -7,22 +7,34 @@ const menuRefs = {
 };
 let activeWindow = null;
 
-menuRefs.startBtn.addEventListener("click", onMenuBtnClick);
-menuRefs.vocabularyBtn.addEventListener("click", onMenuBtnClick);
-menuRefs.progressBtn.addEventListener("click", onMenuBtnClick);
+menuRefs.mainMenu.addEventListener("click", onMenuBtnClick);
 
 menuRefs.backBtn.addEventListener("click", onBackBtnClick);
 
-function onMenuBtnClick() {
+function onMenuBtnClick(e) {
+  const clickedBtn = e.target;
   showPreloader();
 
   menuRefs.mainMenu.classList.add("hidden");
 
-  showSectionByDataAttr(this);
+  showSectionByDataAttr(clickedBtn);
 }
 
-function onBackBtnClick() {
+function onBackBtnClick(e) {
   const preloaderRef = document.querySelector(".preloader-js");
+
+  const menuTemplateRefs = [
+    ...document.querySelector(".template-list-js").children,
+  ].slice(1);
+
+  const currentActiveBlock = menuTemplateRefs.find(
+    (el) => !el.classList.contains("hidden")
+  );
+
+  currentActiveBlock.classList.add("hidden");
+  const currentBlockDataAttr = Object.keys(currentActiveBlock.dataset)[0];
+
+  currentActiveBlock.dataset[currentBlockDataAttr] = false;
 
   this.classList.add("hidden");
   preloaderRef.classList.remove("hidden");
