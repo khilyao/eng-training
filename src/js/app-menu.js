@@ -12,7 +12,10 @@ menuRefs.mainMenu.addEventListener("click", onMenuBtnClick);
 menuRefs.backBtn.addEventListener("click", onBackBtnClick);
 
 function onMenuBtnClick(e) {
+  if (e.target.nodeName !== "BUTTON") return;
+
   const clickedBtn = e.target;
+
   showPreloader();
 
   menuRefs.mainMenu.classList.add("hidden");
