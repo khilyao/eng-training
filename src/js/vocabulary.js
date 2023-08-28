@@ -1,6 +1,10 @@
 import Notiflix from "notiflix";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
+var vex = require("vex-js");
+vex.registerPlugin(require("vex-dialog"));
+vex.defaultOptions.className = "vex-theme-wireframe";
+
 const formRefs = {
   form: document.querySelector("form"),
   inputs: document.querySelectorAll("input"),
@@ -58,8 +62,9 @@ function onSaveCardBtnClick() {
   }
 
   removeWordListMarkup();
-  saveAllWordsToLocalStrg();
   deactivateSaveBtn();
+  clearValueInputs();
+  showModal();
 }
 
 function updateWordList() {
@@ -111,10 +116,23 @@ function deactivateSaveBtn() {
   formRefs.saveCardBtn.classList.add("bg-gray-600");
 }
 
-function saveAllWordsToLocalStrg() {
-  const uniqueKey = new Date().getTime();
-
-  localStorage.setItem(uniqueKey, JSON.stringify(formDataArray));
+function saveAllWordsToLocalStrg(cardName) {
+  localStorage.setItem(cardName, JSON.stringify(formDataArray));
 
   formDataArray.length = 0;
+}
+
+function showModal() {
+  vex.dialog.prompt({
+    message: "What do you want to name the card?",
+    input:
+      '<input class="vex-dialog-prompt-input" name="vex" type="text" placeholder="Card 1" autocomplete="off" required />',
+    callback: function (value) {
+      saveAllWordsToLocalStrg(value);
+    },
+  });
+}
+
+function clearValueInputs() {
+  formRefs.inputs.forEach((el) => (el.value = ""));
 }
