@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.9.3",
+    "jq-fakeloader": "^2.0.1",
     "notiflix": "^3.2.6",
     "reset-css": "^5.0.2"
   }

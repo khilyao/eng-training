@@ -12,18 +12,15 @@
       href="https://fonts.googleapis.com/css?family=Montserrat:regular,700,900"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="../node_modules/jq-fakeloader/dist/fakeLoader.min.css"
+    />
     <link rel="stylesheet" href="./sass/main.scss" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-black">
     <div class="container w-screen h-screen relative px-2 mx-auto">
-      <div class="preloader-js h-screen z-10 flex items-center justify-center">
-        <img
-          class="w-1/5 sm:w-1/12"
-          src="./assets/preloader.gif"
-          alt="Preloader"
-        />
-      </div>
       <div
         class="greeting-js hidden w-10/12 lg:w-8/12 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-align-center text-center text-white"
       >
@@ -154,6 +151,9 @@
         ></div>
       </div>
     </div>
+    <div class="fakeLoader" id="fakeLoader"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../node_modules/jq-fakeloader/dist/fakeLoader.min.js"></script>
     <script src="./js/index.js" type="module"></script>
     <script src="./js/greeting-section.js" type="module"></script>
     <script src="./js/app-menu.js" type="module"></script>

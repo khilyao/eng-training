@@ -1,15 +1,15 @@
 const hasStorageGreetingProp = localStorage.getItem("isGreetingViewed");
 const greetingSectionRefs = {
-  preloader: document.querySelector(".preloader-js"),
   greetingBlock: document.querySelector(".greeting-js"),
   btnStart: document.querySelector(".btn-greeting-js"),
 };
 const DEFAULT_TIMEOUT_DELAY = 500;
 
+$("#fakeLoader").show();
+
 isGreetingViewed(hasStorageGreetingProp);
 
 setTimeout(() => {
-  greetingSectionRefs.preloader.classList.add("hidden");
   greetingSectionRefs.greetingBlock.classList.remove("hidden");
 
   addOpacityForEachEl();
@@ -21,12 +21,13 @@ function onStartBtnClick() {
   const appMenuRef = document.querySelector(".menu-js");
 
   greetingSectionRefs.greetingBlock.classList.add("hidden");
-  greetingSectionRefs.preloader.classList.remove("hidden");
+  $("#fakeLoader").show();
 
   setTimeout(() => {
-    greetingSectionRefs.preloader.classList.add("hidden");
+    $("#fakeLoader").hide();
+
     appMenuRef.classList.remove("hidden");
-  }, 200);
+  }, 400);
 
   localStorage.setItem("isGreetingViewed", true);
 }
@@ -47,10 +48,11 @@ function addOpacityForEachEl() {
 
 function isGreetingViewed(prop) {
   if (prop) {
+    $("#fakeLoader").show();
+
     setTimeout(() => {
       const appMenu = document.querySelector(".menu-js");
 
-      greetingSectionRefs.preloader.classList.add("hidden");
       appMenu.classList.remove("hidden");
     }, DEFAULT_TIMEOUT_DELAY);
 

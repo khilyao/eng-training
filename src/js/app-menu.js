@@ -16,7 +16,10 @@ function onMenuBtnClick(e) {
 
   const clickedBtn = e.target;
 
-  showPreloader();
+  $("#fakeLoader").show();
+  setTimeout(() => {
+    $("#fakeLoader").hide();
+  }, 400);
 
   menuRefs.mainMenu.classList.add("hidden");
 
@@ -24,8 +27,6 @@ function onMenuBtnClick(e) {
 }
 
 function onBackBtnClick(e) {
-  const preloaderRef = document.querySelector(".preloader-js");
-
   const menuTemplateRefs = [
     ...document.querySelector(".template-list-js").children,
   ].slice(1);
@@ -40,20 +41,11 @@ function onBackBtnClick(e) {
   currentActiveBlock.dataset[currentBlockDataAttr] = false;
 
   this.classList.add("hidden");
-  preloaderRef.classList.remove("hidden");
+  $("#fakeLoader").show();
 
   setTimeout(() => {
-    preloaderRef.classList.add("hidden");
+    $("#fakeLoader").hide();
     menuRefs.mainMenu.classList.remove("hidden");
-  }, 200);
-}
-
-function showPreloader() {
-  const preloaderRef = document.querySelector(".preloader-js");
-
-  preloaderRef.classList.remove("hidden");
-  setTimeout(() => {
-    preloaderRef.classList.add("hidden");
   }, 200);
 }
 
