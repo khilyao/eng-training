@@ -16,16 +16,18 @@
       rel="stylesheet"
       href="../node_modules/jq-fakeloader/dist/fakeLoader.min.css"
     />
-    <link rel="stylesheet" href="../node_modules/vex-js/dist/css/vex.css" />
+    <link rel="stylesheet" href="../node_modules/vex-js-fix/dist/css/vex.css" />
     <link
       rel="stylesheet"
-      href="../node_modules/vex-js/dist/css/vex-theme-wireframe.css"
+      href="../node_modules/vex-js-fix/dist/css/vex-theme-wireframe.css"
     />
     <link rel="stylesheet" href="./sass/main.scss" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-black">
-    <div class="container w-screen h-screen relative px-2 mx-auto">
+    <div
+      class="container main-block-js w-screen h-screen relative px-2 mx-auto"
+    >
       <div
         class="greeting-js hidden w-10/12 lg:w-8/12 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-align-center text-center text-white"
       >
@@ -163,5 +165,6 @@
     <script src="./js/greeting-section.js" type="module"></script>
     <script src="./js/app-menu.js" type="module"></script>
     <script src="./js/vocabulary.js" type="module"></script>
+    <script src="./js/start-lesson.js"></script>
   </body>
 </html>

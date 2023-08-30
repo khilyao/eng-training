@@ -1,7 +1,7 @@
 import Notiflix from "notiflix";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
-var vex = require("vex-js");
+var vex = require("vex-js-fix");
 vex.registerPlugin(require("vex-dialog"));
 vex.defaultOptions.className = "vex-theme-wireframe";
 
@@ -27,10 +27,6 @@ formRefs.form.addEventListener("submit", (e) => {
   formRefs.form.reset();
 
   updateWordList();
-
-  if (formDataArray.length === 20) {
-    localStorage.setItem("formData", JSON.stringify(formDataArray));
-  }
 });
 
 formRefs.submitBtn.addEventListener("click", () => {
@@ -103,7 +99,9 @@ function isWordListCreated() {
 function removeWordListMarkup() {
   const wordListRef = document.querySelector(".word-list");
 
-  wordListRef.remove();
+  if (wordListRef) {
+    wordListRef.remove();
+  }
 }
 
 function activateSaveBtn() {
@@ -129,10 +127,17 @@ function showModal() {
       '<input class="vex-dialog-prompt-input" name="vex" type="text" placeholder="Card 1" autocomplete="off" required />',
     callback: function (value) {
       saveAllWordsToLocalStrg(value);
+      showSuccessfulSaveCardMsg(value);
     },
   });
 }
 
 function clearValueInputs() {
   formRefs.inputs.forEach((el) => (el.value = ""));
+}
+
+function showSuccessfulSaveCardMsg(cardName) {
+  Notiflix.Notify.success(`Your card ${cardName} successfully created`, {
+    showOnlyTheLastOne: true,
+  });
 }

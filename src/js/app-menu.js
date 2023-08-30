@@ -65,5 +65,11 @@ function showSectionByDataAttr(btn) {
   activeWindow = elementToRemoveHiddenClass;
 
   elementToRemoveHiddenClass.classList.remove("hidden");
+
+  if (btn.attributes["data-start"]) {
+    menuRefs.backBtn.classList.add("hidden");
+    return;
+  }
+
   menuRefs.backBtn.classList.remove("hidden");
 }
