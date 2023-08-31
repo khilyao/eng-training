@@ -115,7 +115,9 @@ function deactivateSaveBtn() {
 }
 
 function saveAllWordsToLocalStrg(cardName) {
-  localStorage.setItem(cardName, JSON.stringify(formDataArray));
+  if (cardName) {
+    localStorage.setItem(cardName, JSON.stringify(formDataArray));
+  }
 
   formDataArray.length = 0;
 }
@@ -137,7 +139,9 @@ function clearValueInputs() {
 }
 
 function showSuccessfulSaveCardMsg(cardName) {
-  Notiflix.Notify.success(`Your card ${cardName} successfully created`, {
-    showOnlyTheLastOne: true,
-  });
+  if (cardName) {
+    Notiflix.Notify.success(`Your card "${cardName}" successfully created`, {
+      showOnlyTheLastOne: true,
+    });
+  }
 }
