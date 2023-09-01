@@ -4,12 +4,8 @@ var options = {
   valueNames: ["name"],
   item: '<li><h3 class="name"></h3></li>',
 };
-
-var values = generateCardsMarkup();
-
+var values = "";
 var userList = new List("cards", options, values);
-
-generateCardsMarkup();
 
 const refs = {
   mainBlock: document.querySelector(".main-block-js"),
@@ -18,15 +14,16 @@ const refs = {
   backBtn: document.querySelector(".btn-back-js"),
 };
 
-if (!localStorage.getItem("isStartMsgViewed")) {
-  refs.startBtn.addEventListener("click", onStartBtnClick);
-}
+refs.startBtn.addEventListener("click", onStartBtnClick);
 
 function onStartBtnClick() {
-  generateStartTextMarkup();
-  animateStartText();
-  removeEventListenerStartBtn();
-  addToLclStrgNote();
+  if (!localStorage.getItem("isStartMsgViewed")) {
+    generateStartTextMarkup();
+    animateStartText();
+    addToLclStrgNote();
+  }
+
+  createInitMarkupStartSection();
 }
 
 function generateStartTextMarkup() {
@@ -39,7 +36,7 @@ function generateStartTextMarkup() {
 function animateStartText() {
   const startText = refs.mainBlock.querySelector(".start-text-js");
   const substartText = refs.mainBlock.querySelector(".substart-text-js");
-  console.log(startText);
+
   setTimeout(() => {
     startText.classList.remove("opacity-0");
 
@@ -53,10 +50,6 @@ function animateStartText() {
       substartText.classList.add("opacity-0");
     }, 4000);
   }, 250);
-}
-
-function removeEventListenerStartBtn() {
-  refs.startBtn.removeEventListener("click", onStartBtnClick);
 }
 
 function addToLclStrgNote() {
@@ -74,12 +67,12 @@ function generateCardsMarkup() {
 }
 
 function removeInfoItemsFromLocalStrg() {
-  const localStrgItems = Object.entries(localStorage);
-
-  localStrgItems.forEach((el, index) => {
-    if (el[1] === "false" || el[1] === "true") {
-      localStrgItems.splice(index, 1);
+  const localStrgItems = Object.entries(localStorage).filter((el) => {
+    if (el[1] === "true" || el[1] === "false") {
+      return false;
     }
+
+    return true;
   });
 
   localStrgItems.forEach((el) => {
@@ -88,4 +81,14 @@ function removeInfoItemsFromLocalStrg() {
   });
 
   return localStrgItems;
+}
+
+function createInitMarkupStartSection() {
+  const allCards = generateCardsMarkup();
+
+  allCards.forEach(({ name }) => {
+    userList.add({
+      name,
+    });
+  });
 }
