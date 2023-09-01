@@ -12,6 +12,7 @@
   },
   "keywords": [],
   "dependencies": {
+    "list.js": "^2.3.1",
     "parcel": "^2.9.3"
   },
   "devDependencies": {

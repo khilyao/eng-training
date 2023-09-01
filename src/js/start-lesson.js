@@ -1,15 +1,15 @@
-var elem = document.querySelector(".main-carousel");
-var flkty = new Flickity(elem, {
-  // options
-  cellAlign: "left",
-  contain: true,
-});
+import List from "list.js";
 
-// element argument can be a selector string
-//   for an individual element
-var flkty = new Flickity(".main-carousel", {
-  // options
-});
+var options = {
+  valueNames: ["name"],
+  item: '<li><h3 class="name"></h3></li>',
+};
+
+var values = generateCardsMarkup();
+
+var userList = new List("cards", options, values);
+
+generateCardsMarkup();
 
 const refs = {
   mainBlock: document.querySelector(".main-block-js"),
@@ -39,7 +39,7 @@ function generateStartTextMarkup() {
 function animateStartText() {
   const startText = refs.mainBlock.querySelector(".start-text-js");
   const substartText = refs.mainBlock.querySelector(".substart-text-js");
-
+  console.log(startText);
   setTimeout(() => {
     startText.classList.remove("opacity-0");
 
@@ -47,11 +47,11 @@ function animateStartText() {
       startText.classList.add("opacity-0");
 
       substartText.classList.remove("opacity-0");
-    }, 1500);
+    }, 2000);
 
     setTimeout(() => {
       substartText.classList.add("opacity-0");
-    }, 3000);
+    }, 4000);
   }, 250);
 }
 
@@ -63,27 +63,28 @@ function addToLclStrgNote() {
   localStorage.setItem("isStartMsgViewed", true);
 }
 
-generateCardsMarkup();
-
 function generateCardsMarkup() {
   const cards = removeInfoItemsFromLocalStrg();
 
-  const mainCarousel = document.querySelector(".main-carousel");
+  const cardsMarkup = cards.map((el) => {
+    return { name: el[0] };
+  });
 
-  const cardsMarkup = cards
-    .map((el) => {
-      return `<div class="carousel-cell"><img src="https://placehold.co/300x200/EEE/31343C" alt="" /></div>`;
-    })
-    .join("");
+  return cardsMarkup;
 }
 
 function removeInfoItemsFromLocalStrg() {
   const localStrgItems = Object.entries(localStorage);
 
   localStrgItems.forEach((el, index) => {
-    if (el[0].slice(0, 2) === "is") {
+    if (el[1] === "false" || el[1] === "true") {
       localStrgItems.splice(index, 1);
     }
+  });
+
+  localStrgItems.forEach((el) => {
+    const arr = JSON.parse(el[1]);
+    el[1] = arr;
   });
 
   return localStrgItems;
