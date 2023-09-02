@@ -2,7 +2,7 @@ import List from "list.js";
 
 var options = {
   valueNames: ["name"],
-  item: '<li><h3 class="name"></h3></li>',
+  item: '<li class="inline-block p-2.5"><h3 class="name text-base font-normal"></h3></li>',
 };
 var values = "";
 var userList = new List("cards", options, values);
@@ -17,19 +17,21 @@ const refs = {
 refs.startBtn.addEventListener("click", onStartBtnClick);
 
 function onStartBtnClick() {
+  userList.clear();
+
   if (!localStorage.getItem("isStartMsgViewed")) {
     generateStartTextMarkup();
     animateStartText();
     addToLclStrgNote();
   }
 
-  createInitMarkupStartSection();
+  initMarkupStartSection();
 }
 
 function generateStartTextMarkup() {
   refs.mainBlock.insertAdjacentHTML(
     "beforeend",
-    "<p class='start-text-js absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl font-bold sm:text-4xl lg:text-6xl opacity-0 transition-opacity duration-500 ease-in-out text-white'>Let's start</p><p class='substart-text-js w-4/5 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-bold sm:text-4xl lg:text-6xl opacity-0 transition-opacity duration-500 ease-in-out text-white'>You have your word cards, choose one and study it</p>"
+    "<div class='start-text-wrapper-js fixed top-0 left-0 w-screen h-screen bg-black'><p class='start-text-js absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl font-bold sm:text-4xl lg:text-6xl opacity-0 transition-opacity duration-500 ease-in-out text-white'>Let's start</p><p class='substart-text-js w-4/5 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-bold sm:text-4xl lg:text-6xl opacity-0 transition-opacity duration-500 ease-in-out text-white'>You have your word cards, choose one and study it</p>/div>"
   );
 }
 
@@ -48,8 +50,18 @@ function animateStartText() {
 
     setTimeout(() => {
       substartText.classList.add("opacity-0");
+      setTimeout(() => {
+        hideStartTextMarkup();
+      }),
+        300;
     }, 4000);
   }, 250);
+}
+
+function hideStartTextMarkup() {
+  const startTextWrapper = document.querySelector(".start-text-wrapper-js");
+
+  startTextWrapper.classList.add("hidden");
 }
 
 function addToLclStrgNote() {
@@ -83,7 +95,7 @@ function removeInfoItemsFromLocalStrg() {
   return localStrgItems;
 }
 
-function createInitMarkupStartSection() {
+function initMarkupStartSection() {
   const allCards = generateCardsMarkup();
 
   allCards.forEach(({ name }) => {

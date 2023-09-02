@@ -1,0 +1,22 @@
+.list {
+  font-family: sans-serif;
+}
+
+.list > li {
+  background-color: #eee;
+  box-shadow: inset 0 1px 0 #fff;
+}
+
+.cards h3 {
+  margin: 0 0 0.3rem;
+}
+
+.cards input {
+  border: solid 1px #ccc;
+  padding: 7px 14px;
+  background-color: #1c1c1c;
+}
+
+.cards input:focus {
+  border-color: #aaa;
+}

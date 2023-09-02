@@ -90,9 +90,14 @@
         </button>
         <div class="lesson-js pt-28 w-11/12 mx-auto hidden" data-start="false">
           <div id="cards">
-            <input class="search" placeholder="Search" />
-            <button class="sort" data-sort="name">Sort by name</button>
-            <ul class="list"></ul>
+            <input
+              class="search rounded mb-2.5 focus:outline-none"
+              placeholder="Search"
+            />
+            <button class="sort text-white" data-sort="name">
+              Sort by name
+            </button>
+            <ul class="list flex flex-col m-0 pt-5 max-w-[250px]"></ul>
           </div>
         </div>
         <div
@@ -171,6 +176,6 @@
     <script src="./js/greeting-section.js" type="module"></script>
     <script src="./js/app-menu.js" type="module"></script>
     <script src="./js/vocabulary.js" type="module"></script>
-    <script src="./js/start-lesson.js" type="module"></script>
+    <script src="./js/cards.js" type="module"></script>
   </body>
 </html>
