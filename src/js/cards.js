@@ -2,7 +2,7 @@ import List from "list.js";
 
 var options = {
   valueNames: ["name"],
-  item: '<li class="inline-block p-2.5"><h3 class="name text-base font-normal"></h3></li>',
+  item: '<li class="flex items-center mb-2"><button class="btn name min-w-[100px] py-2.5 px-2.5 rounded uppercase cursor-pointer text-base tracking-[1px] text-white border-none font-normal hover:scale-105 focus:outline-none active:scale-95"></button></li>',
 };
 var values = "";
 var userList = new List("cards", options, values);
