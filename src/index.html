@@ -88,14 +88,17 @@
             <use href="./assets/sprite.svg#icon-back"></use>
           </svg>
         </button>
-        <div class="lesson-js pt-28 w-11/12 mx-auto hidden" data-start="false">
-          <div id="cards">
+        <div
+          class="lesson-js pt-28 pl-8 w-11/12 mx-auto hidden"
+          data-start="false"
+        >
+          <div id="cards" class="cards">
             <input
-              class="search rounded mb-2.5 focus:outline-none"
+              class="search rounded p-2.5 mb-2.5 text-white text-base border-2 border-solid border-white focus:outline-none"
               placeholder="Search"
             />
             <button class="sort text-white" data-sort="name">
-              Sort by name
+              Sort by date
             </button>
             <ul class="list flex flex-col m-0 pt-5 max-w-[250px]"></ul>
           </div>

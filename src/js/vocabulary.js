@@ -34,7 +34,8 @@ formRefs.submitBtn.addEventListener("click", () => {
   const userLangWord = formRefs.form
     .querySelector("#user-lang-word")
     .value.trim();
-  const firstInput = [...formRefs.inputs][0];
+
+  const firstInput = formRefs.form.elements[0];
 
   if (engWord && userLangWord) {
     Notiflix.Notify.success(`${engWord} successfully added`, {
@@ -57,7 +58,6 @@ function onSaveCardBtnClick() {
     );
   }
 
-  removeWordListMarkup();
   deactivateSaveBtn();
   clearValueInputs();
   showModal();
@@ -128,8 +128,13 @@ function showModal() {
     input:
       '<input class="vex-dialog-prompt-input" name="vex" type="text" placeholder="Card 1" autocomplete="off" required />',
     callback: function (value) {
+      if (!value) {
+        return;
+      }
+
       saveAllWordsToLocalStrg(value);
       showSuccessfulSaveCardMsg(value);
+      removeWordListMarkup();
     },
   });
 }
