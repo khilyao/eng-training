@@ -40,22 +40,30 @@ function animateStartText() {
   const substartText = refs.mainBlock.querySelector(".substart-text-js");
 
   setTimeout(() => {
-    startText.classList.remove("opacity-0");
+    removeOpacityFromAnEl(startText);
 
     setTimeout(() => {
-      startText.classList.add("opacity-0");
+      addOpacityClassToEl(startText);
 
-      substartText.classList.remove("opacity-0");
+      removeOpacityFromAnEl(substartText);
     }, 2000);
 
     setTimeout(() => {
-      substartText.classList.add("opacity-0");
+      addOpacityClassToEl(substartText);
       setTimeout(() => {
         hideStartTextMarkup();
       }),
         300;
     }, 4000);
   }, 250);
+}
+
+function addOpacityClassToEl(el) {
+  el.classList.add("opacity-0");
+}
+
+function removeOpacityFromAnEl(el) {
+  el.classList.remove("opacity-0");
 }
 
 function hideStartTextMarkup() {
@@ -87,12 +95,16 @@ function removeInfoItemsFromLocalStrg() {
     return true;
   });
 
-  localStrgItems.forEach((el) => {
+  return parseToJSON(localStrgItems);
+}
+
+function parseToJSON(Array) {
+  Array.forEach((el) => {
     const arr = JSON.parse(el[1]);
     el[1] = arr;
   });
 
-  return localStrgItems;
+  return Array;
 }
 
 function initMarkupStartSection() {

@@ -63,6 +63,5 @@ function showSectionByDataAttr(btn) {
   elementToRemoveHiddenClass.dataset[dataAttr] = true;
 
   elementToRemoveHiddenClass.classList.remove("hidden");
-
   menuRefs.backBtn.classList.remove("hidden");
 }

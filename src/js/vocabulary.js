@@ -14,7 +14,13 @@ const formRefs = {
 
 let formDataArray = [];
 
-formRefs.form.addEventListener("submit", (e) => {
+formRefs.form.addEventListener("submit", onSubmit);
+
+formRefs.submitBtn.addEventListener("click", onSubmitBtnClick);
+
+formRefs.saveCardBtn.addEventListener("click", onSaveCardBtnClick);
+
+function onSubmit(e) {
   e.preventDefault();
 
   const engWord = formRefs.form.querySelector("#eng-word").value.trim();
@@ -27,9 +33,9 @@ formRefs.form.addEventListener("submit", (e) => {
   formRefs.form.reset();
 
   updateWordList();
-});
+}
 
-formRefs.submitBtn.addEventListener("click", () => {
+function onSubmitBtnClick() {
   const engWord = formRefs.form.querySelector("#eng-word").value.trim();
   const userLangWord = formRefs.form
     .querySelector("#user-lang-word")
@@ -44,9 +50,7 @@ formRefs.submitBtn.addEventListener("click", () => {
   }
 
   firstInput.focus();
-});
-
-formRefs.saveCardBtn.addEventListener("click", onSaveCardBtnClick);
+}
 
 function onSaveCardBtnClick() {
   if (formDataArray.length === 0) {
