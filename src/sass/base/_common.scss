@@ -7,3 +7,13 @@ body {
 
   overflow: hidden;
 }
+
+h1,
+p {
+  text-shadow: 2px 4px 2px rgba(169, 86, 152, 0.7);
+}
+
+.vex-content {
+  width: 90% !important;
+  max-width: 400px !important;
+}

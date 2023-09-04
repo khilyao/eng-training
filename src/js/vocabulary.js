@@ -50,17 +50,13 @@ formRefs.saveCardBtn.addEventListener("click", onSaveCardBtnClick);
 
 function onSaveCardBtnClick() {
   if (formDataArray.length === 0) {
-    Notiflix.Notify.warning(
-      "Fill in the fields, then add to the card and try again",
-      {
-        showOnlyTheLastOne: true,
-      }
-    );
+    notifyUserAboutEmptyCard();
+    return;
   }
 
   deactivateSaveBtn();
   clearValueInputs();
-  showModal();
+  showModalForCardName();
 }
 
 function updateWordList() {
@@ -96,6 +92,15 @@ function isWordListCreated() {
   }
 }
 
+function notifyUserAboutEmptyCard() {
+  Notiflix.Notify.warning(
+    "Fill in the fields, then add to the card and try again",
+    {
+      showOnlyTheLastOne: true,
+    }
+  );
+}
+
 function removeWordListMarkup() {
   const wordListRef = document.querySelector(".word-list");
 
@@ -122,19 +127,41 @@ function saveAllWordsToLocalStrg(cardName) {
   formDataArray.length = 0;
 }
 
-function showModal() {
+function showModalForCardName() {
   vex.dialog.prompt({
     message: "What do you want to name the card?",
     input:
-      '<input class="vex-dialog-prompt-input" name="vex" type="text" placeholder="Card 1" autocomplete="off" required />',
+      '<input class="vex-dialog-prompt-input relative" name="vex" type="text" placeholder="Card 1" autocomplete="off" required />',
     callback: function (value) {
       if (!value) {
+        activateSaveBtn();
         return;
       }
 
       saveAllWordsToLocalStrg(value);
       showSuccessfulSaveCardMsg(value);
       removeWordListMarkup();
+    },
+    beforeClose: function () {
+      const modalRefs = {
+        dialogInputContainer: document.querySelector(".vex-dialog-input"),
+        cardName: document.querySelector(".vex-dialog-prompt-input"),
+        modalError: document.querySelector(".modal-error"),
+      };
+
+      modalRefs.dialogInputContainer.classList.add("relative");
+
+      const cardNameValue = modalRefs.cardName.value;
+
+      if (!(cardNameValue.length <= 12)) {
+        if (!modalRefs.modalError) {
+          addErrorMarkupParagraph();
+        }
+
+        return false;
+      }
+
+      return true;
     },
   });
 }
@@ -149,4 +176,13 @@ function showSuccessfulSaveCardMsg(cardName) {
       showOnlyTheLastOne: true,
     });
   }
+}
+
+function addErrorMarkupParagraph() {
+  const vexDialogContainer = document.querySelector(".vex-dialog-input");
+
+  vexDialogContainer.insertAdjacentHTML(
+    "beforeend",
+    '<p class="modal-error absolute text-[12px] left-0 -bottom-[20px]" style="color: red">* Enter no more than 12 characters</p>'
+  );
 }
