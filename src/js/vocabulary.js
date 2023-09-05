@@ -135,7 +135,7 @@ function showModalForCardName() {
   vex.dialog.prompt({
     message: "What do you want to name the card?",
     input:
-      '<input class="vex-dialog-prompt-input relative" name="vex" type="text" placeholder="Card 1" autocomplete="off" required />',
+      '<input class="vex-dialog-prompt-input relative" name="vex" type="text" placeholder="Card 1" autocomplete="off" maxlength="12" required />',
     callback: function (value) {
       if (!value) {
         activateSaveBtn();
@@ -147,21 +147,13 @@ function showModalForCardName() {
       removeWordListMarkup();
     },
     beforeClose: function () {
-      const modalRefs = {
-        dialogInputContainer: document.querySelector(".vex-dialog-input"),
-        cardName: document.querySelector(".vex-dialog-prompt-input"),
-        modalError: document.querySelector(".modal-error"),
-      };
+      const valueInput = document.querySelector(
+        ".vex-dialog-prompt-input"
+      ).value;
+      const IsCardHasAlreadyCreated = checkIsCardHasAlreadyCreated(valueInput);
 
-      modalRefs.dialogInputContainer.classList.add("relative");
-
-      const cardNameValue = modalRefs.cardName.value;
-
-      if (!(cardNameValue.length <= 12)) {
-        if (!modalRefs.modalError) {
-          addErrorMarkupParagraph();
-        }
-
+      if (IsCardHasAlreadyCreated) {
+        addErrorMarkupParagraph();
         return false;
       }
 
@@ -172,6 +164,25 @@ function showModalForCardName() {
 
 function clearValueInputs() {
   formRefs.inputs.forEach((el) => (el.value = ""));
+}
+
+function checkIsCardHasAlreadyCreated(newCard) {
+  const allCards = getAllCards();
+  const allCardsArr = allCards.map((el) => el[0]);
+
+  return allCardsArr.includes(newCard);
+}
+
+function getAllCards() {
+  const localStrgItems = Object.entries(localStorage).filter((el) => {
+    if (el[1] === "true" || el[1] === "false") {
+      return false;
+    }
+
+    return true;
+  });
+
+  return localStrgItems;
 }
 
 function showSuccessfulSaveCardMsg(cardName) {
@@ -185,8 +196,10 @@ function showSuccessfulSaveCardMsg(cardName) {
 function addErrorMarkupParagraph() {
   const vexDialogContainer = document.querySelector(".vex-dialog-input");
 
+  vexDialogContainer.classList.add("relative");
+
   vexDialogContainer.insertAdjacentHTML(
     "beforeend",
-    '<p class="modal-error absolute text-[12px] left-0 -bottom-[20px]" style="color: red">* Enter no more than 12 characters</p>'
+    '<p class="modal-error absolute text-[12px] left-0 -bottom-[20px]" style="color: red">* This card name is already in use</p>'
   );
 }
