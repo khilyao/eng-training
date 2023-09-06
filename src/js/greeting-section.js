@@ -15,9 +15,9 @@ setTimeout(() => {
   addOpacityForEachEl();
 }, DEFAULT_TIMEOUT_DELAY);
 
-greetingSectionRefs.btnStart.addEventListener("click", onStartBtnClick);
+greetingSectionRefs.btnStart.addEventListener("click", onStartBtn);
 
-function onStartBtnClick() {
+function onStartBtn() {
   const appMenuRef = document.querySelector(".menu-js");
 
   greetingSectionRefs.greetingBlock.classList.add("hidden");

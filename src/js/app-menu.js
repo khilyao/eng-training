@@ -7,11 +7,11 @@ const menuRefs = {
 };
 let activeWindow = null;
 
-menuRefs.mainMenu.addEventListener("click", onMenuBtnClick);
+menuRefs.mainMenu.addEventListener("click", onMenuBtn);
 
-menuRefs.backBtn.addEventListener("click", onBackBtnClick);
+menuRefs.backBtn.addEventListener("click", onBackBtn);
 
-function onMenuBtnClick(e) {
+function onMenuBtn(e) {
   if (e.target.nodeName !== "BUTTON") return;
 
   const clickedBtn = e.target;
@@ -26,7 +26,7 @@ function onMenuBtnClick(e) {
   showSectionByDataAttr(clickedBtn);
 }
 
-function onBackBtnClick(e) {
+function onBackBtn(e) {
   const menuTemplateRefs = [
     ...document.querySelector(".template-list-js").children,
   ].slice(1);

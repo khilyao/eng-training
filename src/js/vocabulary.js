@@ -16,9 +16,9 @@ let formDataArray = [];
 
 formRefs.form.addEventListener("submit", onSubmit);
 
-formRefs.submitBtn.addEventListener("click", onSubmitBtnClick);
+formRefs.submitBtn.addEventListener("click", onSubmitBtn);
 
-formRefs.saveCardBtn.addEventListener("click", onSaveCardBtnClick);
+formRefs.saveCardBtn.addEventListener("click", onSaveCardBtn);
 
 function onSubmit(e) {
   e.preventDefault();
@@ -27,15 +27,16 @@ function onSubmit(e) {
   const userLangWord = formRefs.form
     .querySelector("#user-lang-word")
     .value.trim();
+  const date = Date.now();
 
-  formDataArray.push({ engWord, userLangWord });
+  formDataArray.push({ engWord, userLangWord, date });
 
   formRefs.form.reset();
 
   updateWordList();
 }
 
-function onSubmitBtnClick() {
+function onSubmitBtn() {
   const engWord = formRefs.form.querySelector("#eng-word").value.trim();
   const userLangWord = formRefs.form
     .querySelector("#user-lang-word")
@@ -52,7 +53,7 @@ function onSubmitBtnClick() {
   firstInput.focus();
 }
 
-function onSaveCardBtnClick() {
+function onSaveCardBtn() {
   if (formDataArray.length === 0) {
     notifyUserAboutEmptyCard();
     return;
@@ -150,10 +151,13 @@ function showModalForCardName() {
       const valueInput = document.querySelector(
         ".vex-dialog-prompt-input"
       ).value;
+      const errorMsg = document.querySelector(".modal-error");
       const IsCardHasAlreadyCreated = checkIsCardHasAlreadyCreated(valueInput);
 
       if (IsCardHasAlreadyCreated) {
-        addErrorMarkupParagraph();
+        if (!errorMsg) {
+          addErrorMarkupParagraph();
+        }
         return false;
       }
 

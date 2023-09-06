@@ -14,9 +14,9 @@ const refs = {
   backBtn: document.querySelector(".btn-back-js"),
 };
 
-refs.startBtn.addEventListener("click", onStartBtnClick);
+refs.startBtn.addEventListener("click", onStartBtn);
 
-function onStartBtnClick() {
+function onStartBtn() {
   userList.clear();
 
   if (!localStorage.getItem("isStartMsgViewed")) {
