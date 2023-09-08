@@ -7,7 +7,7 @@
   "license": "ISC",
   "scripts": {
     "start": "parcel src/*.html",
-    "dev": "parcel src/*.html --host 192.168.0.102 --port 1222",
+    "dev": "parcel src/*.html --host 192.168.0.103 --port 1222",
     "build": "parcel build src/*.html"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
     "list.js": "^2.3.1",
     "notiflix": "^3.2.6",
     "reset-css": "^5.0.2",
+    "screenfull": "^6.0.2",
     "vex-js-fix": "^4.1.1"
   },
   "devDependencies": {

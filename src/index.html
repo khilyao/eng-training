@@ -106,7 +106,7 @@
               Sort by date
             </button>
             <ul
-              class="list max-h-[300px] overflow-auto pl-2 pr-10 inline-block flex flex-col m-0"
+              class="list cards-list-js max-h-[300px] overflow-auto pl-2 pr-10 inline-block flex flex-col m-0"
             ></ul>
           </div>
         </div>
@@ -179,9 +179,22 @@
         ></div>
       </div>
     </div>
+    <div class="inline-block absolute top-10 right-10 opacity-0 lg:opacity-100">
+      <button id="fullscreen-btn" class="inline-block">
+        <svg class="w-5 h-5 sm:w-7 sm:h-7">
+          <use href="./assets/sprite.svg#icon-fullscreen"></use>
+        </svg>
+      </button>
+      <button id="exit-fullscreen-btn" class="inline-block hidden">
+        <svg class="w-5 h-5 sm:w-7 sm:h-7">
+          <use href="./assets/sprite.svg#icon-exit-fullscreen"></use>
+        </svg>
+      </button>
+    </div>
     <div class="fakeLoader" id="fakeLoader"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../node_modules/jq-fakeloader/dist/fakeLoader.min.js"></script>
+    <script src="./js/fullscreen-mode.js" type="module"></script>
     <script src="./js/index.js" type="module"></script>
     <script src="./js/greeting-section.js" type="module"></script>
     <script src="./js/app-menu.js" type="module"></script>

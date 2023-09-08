@@ -8,13 +8,36 @@ var values = "";
 var userList = new List("cards", options, values);
 
 const refs = {
+  list: document.querySelector(".cards-list-js"),
   mainBlock: document.querySelector(".main-block-js"),
-  cardsMenu: document.querySelector(".lesson-js"),
+
   startBtn: document.querySelector(".btn-start-js"),
   backBtn: document.querySelector(".btn-back-js"),
 };
 
 refs.startBtn.addEventListener("click", onStartBtn);
+refs.list.addEventListener("click", onCard);
+
+function onCard(e) {
+  if (e.target.nodeName !== "BUTTON") {
+    return;
+  }
+
+  const cardToLearn = JSON.parse(localStorage.getItem(e.target.textContent));
+  console.log(cardToLearn);
+
+  hideCurrentSection();
+}
+
+function hideCurrentSection() {
+  const cardsMenu = document.querySelector(".lesson-js");
+
+  toggleHiddenClass(cardsMenu);
+}
+
+function toggleHiddenClass(el) {
+  el.classList.toggle("hidden");
+}
 
 function onStartBtn() {
   userList.clear();
