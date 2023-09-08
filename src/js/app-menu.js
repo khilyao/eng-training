@@ -1,67 +1,68 @@
-const menuRefs = {
-  mainMenu: document.querySelector(".menu-js"),
-  startBtn: document.querySelector(".btn-start-js"),
-  vocabularyBtn: document.querySelector(".btn-vocabulary-js"),
-  progressBtn: document.querySelector(".btn-progress-js"),
-  backBtn: document.querySelector(".btn-back-js"),
-};
-let activeWindow = null;
+export default function appMenu() {
+  const menuRefs = {
+    mainMenu: document.querySelector(".menu-js"),
+    startBtn: document.querySelector(".btn-start-js"),
+    vocabularyBtn: document.querySelector(".btn-vocabulary-js"),
+    progressBtn: document.querySelector(".btn-progress-js"),
+    backBtn: document.querySelector(".btn-back-js"),
+  };
 
-menuRefs.mainMenu.addEventListener("click", onMenuBtn);
+  menuRefs.mainMenu.addEventListener("click", onMenuBtn);
 
-menuRefs.backBtn.addEventListener("click", onBackBtn);
+  menuRefs.backBtn.addEventListener("click", onBackBtn);
 
-function onMenuBtn(e) {
-  if (e.target.nodeName !== "BUTTON") return;
+  function onMenuBtn(e) {
+    if (e.target.nodeName !== "BUTTON") return;
 
-  const clickedBtn = e.target;
+    const clickedBtn = e.target;
 
-  $("#fakeLoader").show();
-  setTimeout(() => {
-    $("#fakeLoader").hide();
-  }, 400);
+    $("#fakeLoader").show();
+    setTimeout(() => {
+      $("#fakeLoader").hide();
+    }, 400);
 
-  menuRefs.mainMenu.classList.add("hidden");
+    menuRefs.mainMenu.classList.add("hidden");
 
-  showSectionByDataAttr(clickedBtn);
-}
+    showSectionByDataAttr(clickedBtn);
+  }
 
-function onBackBtn(e) {
-  const menuTemplateRefs = [
-    ...document.querySelector(".template-list-js").children,
-  ].slice(1);
+  function onBackBtn(e) {
+    const menuTemplateRefs = [
+      ...document.querySelector(".template-list-js").children,
+    ].slice(1);
 
-  const currentActiveBlock = menuTemplateRefs.find(
-    (el) => !el.classList.contains("hidden")
-  );
+    const currentActiveBlock = menuTemplateRefs.find(
+      (el) => !el.classList.contains("hidden")
+    );
 
-  currentActiveBlock.classList.add("hidden");
-  const currentBlockDataAttr = Object.keys(currentActiveBlock.dataset)[0];
+    currentActiveBlock.classList.add("hidden");
+    const currentBlockDataAttr = Object.keys(currentActiveBlock.dataset)[0];
 
-  currentActiveBlock.dataset[currentBlockDataAttr] = false;
+    currentActiveBlock.dataset[currentBlockDataAttr] = false;
 
-  this.classList.add("hidden");
-  $("#fakeLoader").show();
+    this.classList.add("hidden");
+    $("#fakeLoader").show();
 
-  setTimeout(() => {
-    $("#fakeLoader").hide();
-    menuRefs.mainMenu.classList.remove("hidden");
-  }, 200);
-}
+    setTimeout(() => {
+      $("#fakeLoader").hide();
+      menuRefs.mainMenu.classList.remove("hidden");
+    }, 200);
+  }
 
-function showSectionByDataAttr(btn) {
-  const dataAttr = Object.keys(btn.dataset)[0];
+  function showSectionByDataAttr(btn) {
+    const dataAttr = Object.keys(btn.dataset)[0];
 
-  const menuTemplateRefs = [
-    ...document.querySelector(".template-list-js").children,
-  ];
+    const menuTemplateRefs = [
+      ...document.querySelector(".template-list-js").children,
+    ];
 
-  const elementToRemoveHiddenClass = menuTemplateRefs.find(
-    (el) => el.dataset[dataAttr] !== undefined
-  );
+    const elementToRemoveHiddenClass = menuTemplateRefs.find(
+      (el) => el.dataset[dataAttr] !== undefined
+    );
 
-  elementToRemoveHiddenClass.dataset[dataAttr] = true;
+    elementToRemoveHiddenClass.dataset[dataAttr] = true;
 
-  elementToRemoveHiddenClass.classList.remove("hidden");
-  menuRefs.backBtn.classList.remove("hidden");
+    elementToRemoveHiddenClass.classList.remove("hidden");
+    menuRefs.backBtn.classList.remove("hidden");
+  }
 }

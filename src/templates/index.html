@@ -12,20 +12,11 @@
       href="https://fonts.googleapis.com/css?family=Montserrat:regular,700,900"
       rel="stylesheet"
     />
-    <link
-      rel="stylesheet"
-      href="../node_modules/jq-fakeloader/dist/fakeLoader.min.css"
-    />
-    <link rel="stylesheet" href="../node_modules/vex-js-fix/dist/css/vex.css" />
-    <link
-      rel="stylesheet"
-      href="../node_modules/vex-js-fix/dist/css/vex-theme-wireframe.css"
-    />
-    <link rel="stylesheet" href="./sass/main.scss" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-black">
     <div
+      id="main-container"
       class="container main-block-js w-screen h-screen relative px-2 mx-auto"
     >
       <div
@@ -84,8 +75,16 @@
           class="btn-back-js absolute inline-block mx-2.5 mt-12 transition hidden ease-linear transition-duration-150 hover:scale-110 hover:fill-slate-500 focus:scale-110 focus:fill-slate-500"
           type="button"
         >
-          <svg class="fill-slate-50 w-10 h-10">
-            <use href="./assets/sprite.svg#icon-back"></use>
+          <svg
+            class="fill-slate-50 w-10 h-10"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            viewBox="0 0 32 32"
+            fill="#fff"
+          >
+            <path
+              d="M23.808 32c3.554-6.439 4.153-16.26-9.808-15.932V24L2 12 14 0v7.762C30.718 7.326 32.58 22.519 23.808 32z"
+            />
           </svg>
         </button>
         <div
@@ -136,7 +135,7 @@
               </div>
             </div>
             <div class="mb-6 md:flex md:flex-col">
-              <div class="">
+              <div>
                 <label
                   class="block text-gray-500 lg:text-2xl font-bold mb-1 md:mb-2 pr-4"
                   for="user-lang-word"
@@ -181,24 +180,35 @@
     </div>
     <div class="inline-block absolute top-10 right-10 opacity-0 lg:opacity-100">
       <button id="fullscreen-btn" class="inline-block">
-        <svg class="w-5 h-5 sm:w-7 sm:h-7">
-          <use href="./assets/sprite.svg#icon-fullscreen"></use>
+        <svg
+          class="w-5 h-5 sm:w-7 sm:h-7"
+          viewBox="0 0 14 14"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill="#fff"
+            fill-rule="evenodd"
+            d="M2 9H0v5h5v-2H2V9ZM0 5h2V2h3V0H0v5Zm12 7H9v2h5V9h-2v3ZM9 0v2h3v3h2V0H9Z"
+          />
         </svg>
       </button>
       <button id="exit-fullscreen-btn" class="inline-block hidden">
-        <svg class="w-5 h-5 sm:w-7 sm:h-7">
-          <use href="./assets/sprite.svg#icon-exit-fullscreen"></use>
+        <svg
+          class="w-5 h-5 sm:w-7 sm:h-7"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#fff"
+          viewBox="0 0 15 15"
+        >
+          <path
+            fill="#fff"
+            fill-rule="evenodd"
+            d="M5.5 2a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H5V2.5a.5.5 0 0 1 .5-.5Zm4 0a.5.5 0 0 1 .5.5V5h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5ZM2 9.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V10H2.5a.5.5 0 0 1-.5-.5Zm7 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H10v2.5a.5.5 0 0 1-1 0v-3Z"
+            clip-rule="evenodd"
+          />
         </svg>
       </button>
     </div>
     <div class="fakeLoader" id="fakeLoader"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../node_modules/jq-fakeloader/dist/fakeLoader.min.js"></script>
-    <script src="./js/fullscreen-mode.js" type="module"></script>
-    <script src="./js/index.js" type="module"></script>
-    <script src="./js/greeting-section.js" type="module"></script>
-    <script src="./js/app-menu.js" type="module"></script>
-    <script src="./js/vocabulary.js" type="module"></script>
-    <script src="./js/cards.js" type="module"></script>
   </body>
 </html>
