@@ -1,9 +1,7 @@
 import Notiflix from "notiflix";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
-var vex = require("vex-js-fix");
-vex.registerPlugin(require("vex-dialog"));
-vex.defaultOptions.className = "vex-theme-wireframe";
+const vex = require("vex-js-fix");
 
 export function vocabulary() {
   const formRefs = {

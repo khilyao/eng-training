@@ -1,4 +1,6 @@
-export default function appMenu() {
+const vex = require("vex-js-fix");
+
+export function appMenu() {
   const menuRefs = {
     mainMenu: document.querySelector(".menu-js"),
     startBtn: document.querySelector(".btn-start-js"),
@@ -16,10 +18,7 @@ export default function appMenu() {
 
     const clickedBtn = e.target;
 
-    $("#fakeLoader").show();
-    setTimeout(() => {
-      $("#fakeLoader").hide();
-    }, 400);
+    showFakeLoader();
 
     menuRefs.mainMenu.classList.add("hidden");
 
@@ -30,6 +29,21 @@ export default function appMenu() {
     const menuTemplateRefs = [
       ...document.querySelector(".template-list-js").children,
     ].slice(1);
+
+    if (menuTemplateRefs.every((el) => el.classList.contains("hidden"))) {
+      vex.dialog.confirm({
+        message:
+          "Are you sure you want to quit? All unsaved progress will be lost",
+        callback: function (value) {
+          if (value) {
+            menuTemplateRefs[0].classList.remove("hidden");
+            showFakeLoader();
+          }
+        },
+      });
+
+      return;
+    }
 
     const currentActiveBlock = menuTemplateRefs.find(
       (el) => !el.classList.contains("hidden")
@@ -65,4 +79,11 @@ export default function appMenu() {
     elementToRemoveHiddenClass.classList.remove("hidden");
     menuRefs.backBtn.classList.remove("hidden");
   }
+}
+
+function showFakeLoader() {
+  $("#fakeLoader").show();
+  setTimeout(() => {
+    $("#fakeLoader").hide();
+  }, 400);
 }

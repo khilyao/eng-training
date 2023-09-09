@@ -8,8 +8,12 @@ import "jq-fakeloader/dist/fakeLoader.min.js";
 import greeting from "./greeting-section";
 import { vocabulary } from "./vocabulary";
 import { cards } from "./cards";
-import appMenu from "./app-menu";
+import { appMenu } from "./app-menu";
 import fullscreen from "./fullscreen-mode";
+
+const vex = require("vex-js-fix");
+vex.registerPlugin(require("vex-dialog"));
+vex.defaultOptions.className = "vex-theme-wireframe";
 
 $.fakeLoader({ timeToHide: "700", bgColor: "#000000", spinner: "spinner3" });
 
