@@ -1,4 +1,5 @@
 import List from "list.js";
+import { startLesson, finishLesson } from "./lesson.js";
 
 var options = {
   valueNames: ["name"],
@@ -24,10 +25,11 @@ export function cards() {
       return;
     }
 
-    const cardToLearn = JSON.parse(localStorage.getItem(e.target.textContent));
-    console.log(cardToLearn);
+    const cardName = e.target.textContent;
+    const cardBody = JSON.parse(localStorage.getItem(e.target.textContent));
 
     hideCurrentSection();
+    startLesson(cardName, cardBody);
   }
 
   function hideCurrentSection() {
@@ -55,7 +57,7 @@ export function cards() {
   function generateStartTextMarkup() {
     refs.mainBlock.insertAdjacentHTML(
       "beforeend",
-      "<div class='start-text-wrapper-js fixed top-0 left-0 w-screen h-screen bg-black'><p class='start-text-js absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl font-bold sm:text-4xl lg:text-6xl opacity-0 transition-opacity duration-500 ease-in-out text-white'>Let's start</p><p class='substart-text-js w-4/5 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-bold sm:text-4xl lg:text-6xl opacity-0 transition-opacity duration-500 ease-in-out text-white'>You have your word cards, choose one and study it</p>/div>"
+      "<div class='start-text-wrapper-js fixed top-0 left-0 w-screen h-screen bg-black z-10'><p class='start-text-js absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl font-bold sm:text-4xl lg:text-6xl opacity-0 transition-opacity duration-500 ease-in-out text-white'>Let's start</p><p class='substart-text-js w-4/5 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-bold sm:text-4xl lg:text-6xl opacity-0 transition-opacity duration-500 ease-in-out text-white'>You have your word cards, choose one and study it</p>/div>"
     );
   }
 
