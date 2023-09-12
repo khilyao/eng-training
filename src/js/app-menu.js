@@ -34,6 +34,9 @@ export function appMenu() {
       vex.dialog.confirm({
         message:
           "Are you sure you want to quit? All unsaved progress will be lost",
+        afterOpen: function () {
+          vex.dialog.buttons.YES.className;
+        },
         callback: function (value) {
           if (value) {
             menuTemplateRefs[0].classList.remove("hidden");

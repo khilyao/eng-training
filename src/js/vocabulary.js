@@ -57,6 +57,11 @@ export function vocabulary() {
       return;
     }
 
+    if (formDataArray.length < 5) {
+      notifyUserAboutMinCountCards();
+      return;
+    }
+
     deactivateSaveBtn();
     clearValueInputs();
     showModalForCardName();
@@ -84,7 +89,13 @@ export function vocabulary() {
 
     wordListRef.insertAdjacentHTML("beforeend", wordsMarkup);
 
-    activateSaveBtn();
+    if (formDataArray.length === 1) {
+      notifyUserAboutMinCountCards();
+    }
+
+    if (formDataArray.length >= 5) {
+      activateSaveBtn();
+    }
   }
 
   function isWordListCreated() {
@@ -103,6 +114,14 @@ export function vocabulary() {
         clickToClose: true,
       }
     );
+  }
+
+  function notifyUserAboutMinCountCards() {
+    Notiflix.Notify.info("The card must contain at least 5 words", {
+      showOnlyTheLastOne: true,
+      clickToClose: true,
+      timeout: 4000,
+    });
   }
 
   function removeWordListMarkup() {
