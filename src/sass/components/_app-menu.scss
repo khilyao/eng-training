@@ -12,8 +12,8 @@
 }
 
 .btn-start {
-  color: $btnStartClr;
-  border-color: $btnStartClr;
+  color: $btnMenuClr;
+  border-color: $btnMenuClr;
 
   &:hover,
   &:focus {
@@ -23,23 +23,23 @@
 }
 
 .btn-vocabulary {
-  color: $btnStorageClr;
-  border-color: $btnStorageClr;
+  color: $btnMenuClr;
+  border-color: $btnMenuClr;
 
   &:hover,
   &:focus {
     border-color: $btnStorageHoverClr;
-    box-shadow: 0 0.5em 0.5em -0.4em $btnStorageHoverClr;
+    box-shadow: 0 0.5em 0.5em -0.4em $btnMenuHoverClr;
   }
 }
 
 .btn-progress {
-  color: $btnProgressClr;
-  border-color: $btnProgressClr;
+  color: $btnMenuClr;
+  border-color: $btnMenuClr;
 
   &:hover,
   &:focus {
     border-color: $btnProgressHoverClr;
-    box-shadow: 0 0.5em 0.5em -0.4em $btnProgressHoverClr;
+    box-shadow: 0 0.5em 0.5em -0.4em $btnMenuHoverClr;
   }
 }
