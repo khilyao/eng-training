@@ -17,8 +17,8 @@
 
   &:hover,
   &:focus {
-    border-color: $btnStartHoverClr;
-    box-shadow: 0 0.5em 0.5em -0.4em $btnStartHoverClr;
+    border-color: $btnMenuHoverClr;
+    box-shadow: 0 0.5em 0.5em -0.4em $btnMenuHoverClr;
   }
 }
 
@@ -28,7 +28,7 @@
 
   &:hover,
   &:focus {
-    border-color: $btnStorageHoverClr;
+    border-color: $btnMenuHoverClr;
     box-shadow: 0 0.5em 0.5em -0.4em $btnMenuHoverClr;
   }
 }
@@ -39,7 +39,7 @@
 
   &:hover,
   &:focus {
-    border-color: $btnProgressHoverClr;
+    border-color: $btnMenuHoverClr;
     box-shadow: 0 0.5em 0.5em -0.4em $btnMenuHoverClr;
   }
 }

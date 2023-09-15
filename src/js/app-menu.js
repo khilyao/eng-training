@@ -41,7 +41,6 @@ export function appMenu() {
           if (value) {
             menuTemplateRefs[0].classList.remove("hidden");
             showFakeLoader();
-            exitLesson();
           }
         },
       });
@@ -64,12 +63,6 @@ export function appMenu() {
       $("#fakeLoader").hide();
       menuRefs.mainMenu.classList.remove("hidden");
     }, 200);
-  }
-
-  function exitLesson() {
-    const lesson = document.querySelector(".lesson-wrapper-js");
-
-    lesson.remove();
   }
 
   function showSectionByDataAttr(btn) {

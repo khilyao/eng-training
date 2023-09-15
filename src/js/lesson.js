@@ -1,13 +1,14 @@
 export function startLesson(cardName, cardBody) {
-  const isLessonExist = document.querySelector(".lesson-wrapper-js");
-
-  if (isLessonExist) {
-    endPreviousLessonMarkup();
-  }
-
   addLessonMarkup(cardName);
 
-  showWord(cardBody);
+  showEngWord(cardBody);
+}
+
+const backBtnRef = document.querySelector(".btn-back-js");
+backBtnRef.addEventListener("click", onBackBtn);
+
+function onBackBtn() {
+  removeLessonMarkup();
 }
 
 function addLessonMarkup(cardName) {
@@ -27,21 +28,20 @@ function addLessonMarkup(cardName) {
   );
 }
 
-function endPreviousLessonMarkup() {
+function removeLessonMarkup() {
   const lesson = document.querySelector(".lesson-wrapper-js");
 
   lesson.remove();
 }
 
-function showWord(cardBody) {
+function showEngWord(cardBody) {
   const base = cardBody.sort(() => Math.random() - 0.5);
-  console.log(base);
 
   const lessonPage = document.querySelector(".lesson-block");
 
   lessonPage.insertAdjacentHTML(
     "beforeend",
-    `<p class="text-white">${base.engWord}</p>
+    `<p class="text-white">${base[0].engWord}</p>
      <ul class="text-white">
      <li class=""></li>
      <li class=""></li>
