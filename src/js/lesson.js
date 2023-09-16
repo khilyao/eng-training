@@ -8,7 +8,11 @@ const backBtnRef = document.querySelector(".btn-back-js");
 backBtnRef.addEventListener("click", onBackBtn);
 
 function onBackBtn() {
-  removeLessonMarkup();
+  const lesson = document.querySelector(".lesson-wrapper-js");
+
+  if (lesson) {
+    removeLessonMarkup(lesson);
+  }
 }
 
 function addLessonMarkup(cardName) {
@@ -28,10 +32,8 @@ function addLessonMarkup(cardName) {
   );
 }
 
-function removeLessonMarkup() {
-  const lesson = document.querySelector(".lesson-wrapper-js");
-
-  lesson.remove();
+function removeLessonMarkup(lessonBlock) {
+  lessonBlock.remove();
 }
 
 function showEngWord(cardBody) {
@@ -41,12 +43,21 @@ function showEngWord(cardBody) {
 
   lessonPage.insertAdjacentHTML(
     "beforeend",
-    `<p class="text-white">${base[0].engWord}</p>
-     <ul class="text-white">
-     <li class=""></li>
-     <li class=""></li>
-     <li class=""></li>
-     <li class=""></li>
+    `<p class="mb-16 text-2xl text-center text-white">${base[0].engWord}</p>
+     <ul class="user-words-list-js sm:flex text-center text-white">
+     <li class="user-word-js mr-2">Hello</li>
+     <li class="user-word-js mr-2">Money</li>
+     <li class="user-word-js mr-2">Lambda</li>
+     <li class="user-word-js">Lorem</li>
      </ul>`
   );
+
+  const listWords = document.querySelector(".user-words-list-js");
+
+  listWords.addEventListener("click", onChooseAnswer);
+}
+
+function onChooseAnswer(e) {
+  if (e.target.nodeName === "LI") {
+  }
 }

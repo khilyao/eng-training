@@ -68,7 +68,9 @@ export function vocabulary() {
   }
 
   function updateWordList() {
+    console.log(formDataArray);
     const wordsMarkup = formDataArray
+      .sort((a, b) => a.date - b.date)
       .reverse()
       .map((el) => {
         return `<div class="word-item inline-block rounded px-2.5 py-2.5 mx-1.5 my-1.5 text-white text-sm">${el.engWord}</div>`;
