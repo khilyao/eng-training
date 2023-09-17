@@ -68,7 +68,6 @@ export function vocabulary() {
   }
 
   function updateWordList() {
-    console.log(formDataArray);
     const wordsMarkup = formDataArray
       .sort((a, b) => a.date - b.date)
       .reverse()
