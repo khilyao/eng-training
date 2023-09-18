@@ -1,3 +1,6 @@
+const vex = require("vex-js-fix");
+import { showFakeLoader } from "./app-menu";
+
 export function startLesson(cardName, cardBody) {
   addLessonMarkup(cardName);
 
@@ -5,15 +8,32 @@ export function startLesson(cardName, cardBody) {
 }
 
 let correctWordCounter = 0;
+let userRandomWords;
+const wrongWordsList = [];
 
 const backBtnRef = document.querySelector(".btn-back-js");
 backBtnRef.addEventListener("click", onBackBtn);
 
 function onBackBtn() {
-  const lesson = document.querySelector(".lesson-wrapper-js");
+  const menuTemplateRefs = [
+    ...document.querySelector(".template-list-js").children,
+  ].slice(1);
 
-  if (lesson) {
-    removeLessonMarkup(lesson);
+  if (menuTemplateRefs.every((el) => el.classList.contains("hidden"))) {
+    vex.dialog.confirm({
+      message: "Are you sure you want to quit? All progress will be lost",
+      callback: function (value) {
+        if (value) {
+          const lessonWrapper = document.querySelector(".lesson-wrapper-js");
+
+          menuTemplateRefs[0].classList.remove("hidden");
+          showFakeLoader();
+          removeLessonMarkup(lessonWrapper);
+
+          userRandomWords = undefined;
+        }
+      },
+    });
   }
 }
 
@@ -34,13 +54,17 @@ function addLessonMarkup(cardName) {
   );
 }
 
-function removeLessonMarkup(lessonBlock) {
-  lessonBlock.remove();
+function removeLessonMarkup(lessonWrapper) {
+  lessonWrapper.remove();
 }
 
 function showEngWord(cardBody) {
   const base = cardBody.sort(() => Math.random() - 0.5);
   const userWords = base.map((el) => el.userLangWord);
+
+  if (base.length === 0) {
+    return;
+  }
 
   addMarkupToLessonBlock(base, userWords);
 }
@@ -49,14 +73,23 @@ function addMarkupToLessonBlock(base, userWords) {
   const lessonPage = document.querySelector(".lesson-block");
   const engWord = base[0].engWord;
   const userWord = base[0].userLangWord;
-  const userRandomWords = userWords
-    .sort((a, b) => {
-      a = Math.random() - 0.5;
-      b = Math.random() - 0.5;
+  if (userRandomWords === undefined) {
+    userRandomWords = userWords
+      .sort((a, b) => {
+        a = Math.random() - 0.5;
+        b = Math.random() - 0.5;
 
-      return a - b;
-    })
-    .filter((el) => el !== userWord);
+        return a - b;
+      })
+      .filter((el) => el !== userWord);
+  }
+
+  userRandomWords.sort((a, b) => {
+    a = Math.random() - 0.5;
+    b = Math.random() - 0.5;
+
+    return a - b;
+  });
 
   lessonPage.insertAdjacentHTML(
     "beforeend",
@@ -69,10 +102,16 @@ function addMarkupToLessonBlock(base, userWords) {
      </ul>`
   );
 
-  const randomItem = document.querySelectorAll(".user-word-js");
-  const randomNumber = Math.floor(Math.random() * 4);
+  const allAnswers = Array.from(document.querySelectorAll(".user-word-js")).map(
+    (el) => el.textContent
+  );
 
-  randomItem[randomNumber].textContent = userWord;
+  const userLangWords = Array.from(document.querySelectorAll(".user-word-js"));
+
+  if (!allAnswers.includes(userWord)) {
+    const randomNumber = Math.floor(Math.random() * 4);
+    userLangWords[randomNumber].textContent = userWord;
+  }
 
   const listWords = document.querySelector(".user-words-list-js");
 
@@ -89,14 +128,18 @@ function onChooseAnswer(e, userAnswer, baseData) {
 
     if (e.target.textContent === userAnswer) {
       correctWordCounter += 1;
-      console.log(correctWordCounter);
+
       clearLessonBlock(lessonBlock);
 
       showEngWord(baseData);
+
+      return;
     }
 
     if (e.target.textContent !== userAnswer) {
       clearLessonBlock(lessonBlock);
+
+      wrongWordsList.push(userAnswer);
 
       showEngWord(baseData);
     }

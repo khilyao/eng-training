@@ -31,19 +31,6 @@ export function appMenu() {
     ].slice(1);
 
     if (menuTemplateRefs.every((el) => el.classList.contains("hidden"))) {
-      vex.dialog.confirm({
-        message: "Are you sure you want to quit? All progress will be lost",
-        afterOpen: function () {
-          vex.dialog.buttons.YES.className;
-        },
-        callback: function (value) {
-          if (value) {
-            menuTemplateRefs[0].classList.remove("hidden");
-            showFakeLoader();
-          }
-        },
-      });
-
       return;
     }
     const currentActiveBlock = menuTemplateRefs.find(
@@ -82,7 +69,7 @@ export function appMenu() {
   }
 }
 
-function showFakeLoader() {
+export function showFakeLoader() {
   $("#fakeLoader").show();
   setTimeout(() => {
     $("#fakeLoader").hide();
