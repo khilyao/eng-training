@@ -63,6 +63,11 @@ function showEngWord(cardBody) {
   const userWords = base.map((el) => el.userLangWord);
 
   if (base.length === 0) {
+    if (wrongWordsList.length === 0) {
+      const lesson = document.querySelector(".lesson-wrapper-js");
+
+      lesson.innerHTML = `<h1 class="text-white">Congratulations</h1>`;
+    }
     return;
   }
 
@@ -149,3 +154,5 @@ function onChooseAnswer(e, userAnswer, baseData) {
 function clearLessonBlock(block) {
   block.innerHTML = "";
 }
+
+function addCongratulationsMarkup() {}
