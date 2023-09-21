@@ -2,3 +2,30 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   background-color: #111;
 }
+
+.progress-container {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+
+  width: 70%;
+  max-width: 400px;
+  height: 15px;
+
+  background-color: #25292c;
+  border-radius: 0.4rem;
+
+  transform: translateX(-50%);
+
+  overflow: hidden;
+}
+
+.progress-pointer {
+  display: inline-block;
+
+  text-align: center;
+  color: #ffffff;
+  background-color: #1b7914;
+
+  transition: width 800ms ease;
+}

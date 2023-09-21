@@ -8,6 +8,7 @@ export function startLesson(cardName, cardBody) {
 }
 
 let correctWordCounter = 0;
+let totalClicksOnAnswer = 0;
 let userRandomWords;
 const wrongWordsList = [];
 
@@ -46,6 +47,9 @@ function addLessonMarkup(cardName) {
     <h2
       class="card-name absolute top-[100px] right-[140px] word-item inline-block rounded-md bg-black px-5 py-2.5 min-w-[100px] text-center uppercase text-white text-2xl border-2 border-white border-solid"
     >${cardName}</h2>
+    <div class="progress-container">
+    <div class="progress-pointer" style="width:0%">0.00%</div>
+    </div>
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div class="lesson-block">
       </div>
@@ -64,10 +68,9 @@ function showEngWord(cardBody) {
 
   if (base.length === 0) {
     if (wrongWordsList.length === 0) {
-      const lesson = document.querySelector(".lesson-wrapper-js");
-
-      lesson.innerHTML = `<h1 class="text-white">Congratulations</h1>`;
+      animateGrade();
     }
+
     return;
   }
 
@@ -100,9 +103,9 @@ function addMarkupToLessonBlock(base, userWords) {
     "beforeend",
     `<p class="mb-16 text-2xl text-center text-white">${engWord}</p>
      <ul class="user-words-list-js sm:flex text-center text-white">
-     <li class="user-word-js mr-2">${userRandomWords[0]}</li>
-     <li class="user-word-js mr-2">${userRandomWords[1]}</li>
-     <li class="user-word-js mr-2">${userRandomWords[2]}</li>
+     <li class="user-word-js sm:mr-6">${userRandomWords[0]}</li>
+     <li class="user-word-js sm:mr-6">${userRandomWords[1]}</li>
+     <li class="user-word-js sm:mr-6">${userRandomWords[2]}</li>
      <li class="user-word-js">${userRandomWords[3]}</li>
      </ul>`
   );
@@ -128,31 +131,42 @@ function addMarkupToLessonBlock(base, userWords) {
 }
 
 function onChooseAnswer(e, userAnswer, baseData) {
-  if (e.target.nodeName === "LI") {
-    const lessonBlock = document.querySelector(".lesson-block");
+  const lessonBlock = document.querySelector(".lesson-block");
 
+  if (e.target.nodeName === "LI") {
     if (e.target.textContent === userAnswer) {
       correctWordCounter += 1;
-
-      clearLessonBlock(lessonBlock);
-
-      showEngWord(baseData);
-
-      return;
     }
 
     if (e.target.textContent !== userAnswer) {
-      clearLessonBlock(lessonBlock);
-
       wrongWordsList.push(userAnswer);
-
-      showEngWord(baseData);
     }
   }
+
+  totalClicksOnAnswer += 1;
+
+  clearLessonBlock(lessonBlock);
+  updateLessonProgressBar(totalClicksOnAnswer);
+  showEngWord(baseData);
 }
 
 function clearLessonBlock(block) {
   block.innerHTML = "";
 }
 
-function addCongratulationsMarkup() {}
+function animateGrade() {
+  setTimeout(() => {
+    const lesson = document.querySelector(".lesson-wrapper-js");
+
+    lesson.innerHTML = `<h1 class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">Congratulations</h1>`;
+  }, 100);
+}
+
+function updateLessonProgressBar(counter) {
+  const progressBar = document.querySelector(".progress-pointer");
+
+  const value = ((counter / (userRandomWords.length + 1)) * 100).toFixed(2);
+
+  progressBar.textContent = `${value}%`;
+  progressBar.style.width = `${value}%`;
+}
