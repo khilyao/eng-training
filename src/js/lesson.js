@@ -3,7 +3,7 @@ import { showFakeLoader } from "./app-menu";
 
 export function startLesson(cardName, cardBody) {
   addLessonMarkup(cardName);
-
+  resetAllCounters();
   showEngWord(cardBody);
 }
 
@@ -45,10 +45,10 @@ function addLessonMarkup(cardName) {
     "beforeend",
     `  <div class="lesson-wrapper-js fixed top-0 left-0 w-screen h-screen">
     <h2
-      class="card-name absolute top-[100px] right-[140px] word-item inline-block rounded-md bg-black px-5 py-2.5 min-w-[100px] text-center uppercase text-white text-2xl border-2 border-white border-solid"
+      class="card-name absolute top-[8%] left-1/2 -translate-x-1/2 word-item inline-block rounded-md font-bold bg-black px-5 py-2.5 min-w-[100px] text-center uppercase text-white text-lg sm:text-2xl border-2 border-white border-solid"
     >${cardName}</h2>
-    <div class="progress-container">
-    <div class="progress-pointer" style="width:0%">0.00%</div>
+    <div class="progress-container absolute top-[20%] left-[50%] flex items-center w-[70%] max-w-[600px] height-[18px] -translate-x-1/2 overflow-hidden rounded-md">
+<div class="progress-pointer transition-all" style="width:0%">0.00%</div>
     </div>
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div class="lesson-block">
@@ -80,7 +80,7 @@ function showEngWord(cardBody) {
 function addMarkupToLessonBlock(base, userWords) {
   const lessonPage = document.querySelector(".lesson-block");
   const engWord = base[0].engWord;
-  const userWord = base[0].userLangWord;
+  const userWordAnswer = base[0].userLangWord;
   if (userRandomWords === undefined) {
     userRandomWords = userWords
       .sort((a, b) => {
@@ -89,7 +89,7 @@ function addMarkupToLessonBlock(base, userWords) {
 
         return a - b;
       })
-      .filter((el) => el !== userWord);
+      .filter((el) => el !== userWordAnswer);
   }
 
   userRandomWords.sort((a, b) => {
@@ -101,12 +101,12 @@ function addMarkupToLessonBlock(base, userWords) {
 
   lessonPage.insertAdjacentHTML(
     "beforeend",
-    `<p class="mb-16 text-2xl text-center text-white">${engWord}</p>
+    `<p class="mb-8 sm:mb-28 text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-white">${engWord}</p>
      <ul class="user-words-list-js sm:flex text-center text-white">
-     <li class="user-word-js sm:mr-6">${userRandomWords[0]}</li>
-     <li class="user-word-js sm:mr-6">${userRandomWords[1]}</li>
-     <li class="user-word-js sm:mr-6">${userRandomWords[2]}</li>
-     <li class="user-word-js">${userRandomWords[3]}</li>
+     <li class="user-word-js text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[0]}</li>
+     <li class="user-word-js text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[1]}</li>
+     <li class="user-word-js text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[2]}</li>
+     <li class="user-word-js text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95">${userRandomWords[3]}</li>
      </ul>`
   );
 
@@ -116,9 +116,9 @@ function addMarkupToLessonBlock(base, userWords) {
 
   const userLangWords = Array.from(document.querySelectorAll(".user-word-js"));
 
-  if (!allAnswers.includes(userWord)) {
+  if (!allAnswers.includes(userWordAnswer)) {
     const randomNumber = Math.floor(Math.random() * 4);
-    userLangWords[randomNumber].textContent = userWord;
+    userLangWords[randomNumber].textContent = userWordAnswer;
   }
 
   const listWords = document.querySelector(".user-words-list-js");
@@ -126,7 +126,7 @@ function addMarkupToLessonBlock(base, userWords) {
   base.splice(0, 1);
 
   listWords.addEventListener("click", (e) => {
-    onChooseAnswer(e, userWord, base);
+    onChooseAnswer(e, userWordAnswer, base);
   });
 }
 
@@ -159,7 +159,7 @@ function animateGrade() {
     const lesson = document.querySelector(".lesson-wrapper-js");
 
     lesson.innerHTML = `<h1 class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">Congratulations</h1>`;
-  }, 100);
+  }, 500);
 }
 
 function updateLessonProgressBar(counter) {
@@ -169,4 +169,9 @@ function updateLessonProgressBar(counter) {
 
   progressBar.textContent = `${value}%`;
   progressBar.style.width = `${value}%`;
+}
+
+function resetAllCounters() {
+  correctWordCounter = 0;
+  totalClicksOnAnswer = 0;
 }
