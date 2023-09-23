@@ -3,7 +3,7 @@ import { startLesson, finishLesson } from "./lesson.js";
 
 var options = {
   valueNames: ["name"],
-  item: '<li class="flex items-center mb-2"><button class="btn name min-w-[100px] py-2.5 px-2.5 rounded uppercase cursor-pointer text-base tracking-[1px] text-white border-none font-normal hover:scale-105 focus:outline-none active:scale-95"></button></li>',
+  item: '<li class="flex items-center mb-2"><button class="btn-card name min-w-[100px] py-2.5 px-2.5 rounded uppercase cursor-pointer text-base tracking-[1px] text-white border-none font-normal hover:scale-105 focus:outline-none active:scale-95"></button></li>',
 };
 var values = "";
 var userList = new List("cards", options, values);

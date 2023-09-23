@@ -17,3 +17,19 @@ p {
   width: 90% !important;
   max-width: 400px !important;
 }
+
+.btn {
+  background-color: #5046e5 !important;
+  box-shadow: 0px 4px 9px 4px rgba(80, 70, 229, 0.3) !important;
+
+  animation: scale 1s linear 0s infinite alternate none;
+
+  &:hover,
+  &:focus {
+    background-color: #4a3fe0 !important;
+    box-shadow: 100px, 10px, 100px, -4px, rgba(80, 70, 229, 0.2), 0px, 4px, 18px,
+      0px, rgba(80, 70, 229, 0.1) !important;
+
+    animation-play-state: paused;
+  }
+}

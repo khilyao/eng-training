@@ -1,5 +1,6 @@
 const vex = require("vex-js-fix");
 import { showFakeLoader } from "./app-menu";
+import congratulationsImg from "../assets/congratulations.png";
 
 export function startLesson(cardName, cardBody) {
   addLessonMarkup(cardName);
@@ -103,10 +104,10 @@ function addMarkupToLessonBlock(base, userWords) {
     "beforeend",
     `<p class="mb-8 sm:mb-28 text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-white">${engWord}</p>
      <ul class="user-words-list-js sm:flex text-center text-white">
-     <li class="user-word-js text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[0]}</li>
-     <li class="user-word-js text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[1]}</li>
-     <li class="user-word-js text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[2]}</li>
-     <li class="user-word-js text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95">${userRandomWords[3]}</li>
+     <li class="user-word-js p-1 text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[0]}</li>
+     <li class="user-word-js p-1 text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[1]}</li>
+     <li class="user-word-js p-1 text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[2]}</li>
+     <li class="user-word-js p-1 text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95">${userRandomWords[3]}</li>
      </ul>`
   );
 
@@ -132,15 +133,15 @@ function addMarkupToLessonBlock(base, userWords) {
 
 function onChooseAnswer(e, userAnswer, baseData) {
   const lessonBlock = document.querySelector(".lesson-block");
+  console.log(e.target.nodeName);
+  if (e.target.nodeName !== "LI") return;
 
-  if (e.target.nodeName === "LI") {
-    if (e.target.textContent === userAnswer) {
-      correctWordCounter += 1;
-    }
+  if (e.target.textContent === userAnswer) {
+    correctWordCounter += 1;
+  }
 
-    if (e.target.textContent !== userAnswer) {
-      wrongWordsList.push(userAnswer);
-    }
+  if (e.target.textContent !== userAnswer) {
+    wrongWordsList.push(userAnswer);
   }
 
   totalClicksOnAnswer += 1;
@@ -157,9 +158,38 @@ function clearLessonBlock(block) {
 function animateGrade() {
   setTimeout(() => {
     const lesson = document.querySelector(".lesson-wrapper-js");
-
-    lesson.innerHTML = `<h1 class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white">Congratulations</h1>`;
+    lesson.innerHTML = `<div class="result-block-js fixed w-full flex flex-col items-center top-[20%] sm:top-[15%] left-1/2 -translate-x-1/2">
+    <h1 class="mb-10 text-3xl sm:text-4xl lg:text-6xl text-white">Congratulations!</h1>
+    <img class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${congratulationsImg}" >
+    <p class="text-3xl lg:text-5xl text-white">You have no mistakes</p>
+    </div>`;
   }, 500);
+
+  setTimeout(() => {
+    const resultBlock = document.querySelector(".result-block-js");
+
+    resultBlock.insertAdjacentHTML(
+      "beforeend",
+      `<button class="btn continue-btn-js transition-colors inline-block rounded mt-24 sm:mt-14 lg:mt-16 px-5 pb-2 pt-2.5 sm:px-6 sm:pb-2 sm:pt-2.5 lg:px-7 lg:pb-2.5 lg:pt-3 text-xl sm:text-2xl lg:text-3xl font-bold uppercase leading-normal text-neutral-50 transition opacity-0 transition-opacity duration-300 ease-in-out focus:outline-none focus:ring-0 text-white" type="button">Continue</button>`
+    );
+
+    setTimeout(() => {
+      const contBtn = resultBlock.querySelector(".continue-btn-js");
+
+      contBtn.classList.remove("opacity-0");
+
+      contBtn.addEventListener("click", onContinueGrade);
+    }, 200);
+  }, 1000);
+}
+
+function onContinueGrade() {
+  const lessonWrapper = document.querySelector(".lesson-wrapper-js");
+
+  lessonWrapper.remove();
+
+  const appMenu = document.querySelector(".menu-js");
+  appMenu.classList.remove("hidden");
 }
 
 function updateLessonProgressBar(counter) {
