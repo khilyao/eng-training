@@ -73,5 +73,5 @@ export function showFakeLoader() {
   $("#fakeLoader").show();
   setTimeout(() => {
     $("#fakeLoader").hide();
-  }, 400);
+  }, 200);
 }
