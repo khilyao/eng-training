@@ -111,7 +111,7 @@ function addMarkupToLessonBlock(base, userWords) {
 
   lessonPage.insertAdjacentHTML(
     "beforeend",
-    `<p class="mb-8 sm:mb-10 lg:mb-28 text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-white">${engWord}</p>
+    `<p class="mb-8 sm:mb-10 lg:mb-28 text-5xl sm:text-6xl lg:text-7xl font-bold text-center text-white">${engWord}</p>
      <ul class="user-words-list-js min-w-[100px] flex flex-col lg:flex-row text-center text-white">
      <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[0]}</li>
      <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[1]}</li>
@@ -136,21 +136,21 @@ function addMarkupToLessonBlock(base, userWords) {
   base.splice(0, 1);
 
   listWords.addEventListener("click", (e) => {
-    onChooseAnswer(e, userWordAnswer, base);
+    onChooseAnswer(e, engWord, userWordAnswer, base);
   });
 }
 
-function onChooseAnswer(e, userAnswer, baseData) {
+function onChooseAnswer(e, engWord, userAnswer, baseData) {
   const lessonBlock = document.querySelector(".lesson-block");
-  const engWord = e.target.textContent;
+  const answer = e.target.textContent;
 
   if (e.target.nodeName !== "LI") return;
 
-  if (engWord === userAnswer) {
+  if (answer === userAnswer) {
     correctWordCounter += 1;
   }
 
-  if (engWord !== userAnswer) {
+  if (answer !== userAnswer) {
     wrongWordsList.push({ engWord, userAnswer });
   }
 
@@ -166,11 +166,12 @@ function clearLessonBlock(block) {
 }
 
 function animateGrade(result) {
+  const lesson = document.querySelector(".lesson-wrapper-js");
+
   switch (result) {
     case "passed":
       setTimeout(() => {
-        const lesson = document.querySelector(".lesson-wrapper-js");
-        lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[20%] sm:top-[15%] left-1/2 -translate-x-1/2">
+        lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[15%] left-1/2 -translate-x-1/2">
       <h1 class="mb-10 text-center text-3xl sm:text-4xl lg:text-6xl text-white">Congratulations!</h1>
       <img class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${congratulationsImg}" >
       <p class="text-3xl text-center lg:text-5xl text-white">You have no mistakes</p>
@@ -180,34 +181,36 @@ function animateGrade(result) {
 
     case "most":
       setTimeout(() => {
-        const lesson = document.querySelector(".lesson-wrapper-js");
         const mistakesMarkup = wrongWordsList
-          .map((el) => `<li class="">${el.userAnswer}</li>`)
+          .map(
+            (el) =>
+              `<li class="bg-[#333] p-2 sm:p-3 m-1 mr-4 sm:mr-8 text-base sm:text-xl lg:text-2xl rounded text-white">${el.engWord}</li>`
+          )
           .join("");
 
-        lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[20%] sm:top-[15%] left-1/2 -translate-x-1/2">
-        <h1 class="mb-10 text-center text-3xl sm:text-4xl lg:text-6xl text-white">It was good</h1>
-        <img class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${smileImg}" >
-        <p class="text-3xl text-center lg:text-5xl text-white">But you have these mistakes</p>
-        <ul class="
-        ">${mistakesMarkup}</ul>
+        lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[15%] left-1/2 -translate-x-1/2">
+        <h1 class="mb-6 text-center text-3xl sm:text-4xl lg:text-6xl text-white">It was good</h1>
+        <img class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${smileImg}" >
+        <p class="mb-6 text-3xl text-center lg:text-5xl text-white">But you have these mistakes</p>
+        <ul class="mistakes-list flex flex-wrap px-2">${mistakesMarkup}</ul>
         </div>`;
       }, 500);
       break;
 
     case "failed":
       setTimeout(() => {
-        const lesson = document.querySelector(".lesson-wrapper-js");
         const mistakesMarkup = wrongWordsList
-          .map((el) => `<li>${el.userAnswer}</li>`)
+          .map(
+            (el) =>
+              `<li class="bg-[#333] p-2 sm:p-3 m-1 mr-6 sm:mr-8 text-base sm:text-xl lg:text-2xl rounded text-white">${el.engWord}</li>`
+          )
           .join("");
 
-        lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[20%] sm:top-[15%] left-1/2 -translate-x-1/2">
-        <h1 class="mb-10 text-center text-3xl sm:text-4xl lg:text-6xl text-white">You need more practice</h1>
-        <img class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${sadImg}" >
-        <p class="text-3xl text-center lg:text-5xl text-white">These are your mistakes</p>
-        <ul class="
-        ">${mistakesMarkup}</ul>
+        lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[15%] left-1/2 -translate-x-1/2">
+        <h1 class="mb-6 text-center text-3xl sm:text-4xl lg:text-6xl text-white">You need more practice</h1>
+        <img class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${sadImg}" >
+        <p class="mb-6 text-3xl text-center lg:text-5xl text-white">These are your mistakes</p>
+        <ul class="mistakes-list flex flex-wrap px-2">${mistakesMarkup}</ul>
         </div>`;
       }, 500);
       break;
@@ -215,11 +218,19 @@ function animateGrade(result) {
 
   setTimeout(() => {
     const resultBlock = document.querySelector(".result-block-js");
+    const isMistakesList =
+      Boolean(document.querySelector(".mistakes-list")) === true;
 
     resultBlock.insertAdjacentHTML(
       "beforeend",
       `<button class="btn continue-btn-js tracking-wide transition-colors inline-block rounded mt-24 sm:mt-14 lg:mt-20 px-5 pb-2 pt-2.5 sm:px-6 sm:pb-2 sm:pt-2.5 lg:px-7 lg:pb-2.5 lg:pt-3 text-xl sm:text-2xl lg:text-3xl font-bold uppercase leading-normal text-neutral-50 transition opacity-0 transition-opacity duration-300 ease-in-out focus:outline-none focus:ring-0 text-white" type="button">Continue</button>`
     );
+
+    if (isMistakesList) {
+      const continueBtn = resultBlock.querySelector(".continue-btn-js");
+
+      continueBtn.classList.add("mt-10");
+    }
 
     setTimeout(() => {
       const continueBtn = resultBlock.querySelector(".continue-btn-js");
