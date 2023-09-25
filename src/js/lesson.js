@@ -6,14 +6,14 @@ import sadImg from "../assets/sad.png";
 
 export function startLesson(cardName, cardBody) {
   addLessonMarkup(cardName);
-  resetAllCounters();
+  resetAllData();
   showEngWord(cardBody);
 }
 
 let correctWordCounter = 0;
 let totalClicksOnAnswer = 0;
 let userRandomWords;
-const wrongWordsList = [];
+let wrongWordsList = [];
 
 const backBtnRef = document.querySelector(".btn-back-js");
 backBtnRef.addEventListener("click", onBackBtn);
@@ -50,10 +50,10 @@ function addLessonMarkup(cardName) {
     <h2
       class="card-name absolute top-[8%] left-1/2 -translate-x-1/2 word-item inline-block rounded-md font-bold bg-black px-5 py-2.5 min-w-[100px] text-center uppercase text-white text-lg sm:text-2xl border-2 border-white border-solid"
     >${cardName}</h2>
-    <div class="progress-container absolute top-[20%] left-[50%] flex items-center w-[70%] max-w-[600px] height-[18px] -translate-x-1/2 overflow-hidden rounded-md">
-<div class="progress-pointer transition-all" style="width:0%">0.00%</div>
+    <div class="progress-container absolute top-[20%] left-[50%] flex items-center w-[70%] max-w-[600px] h-[18px] sm:h-[20px] -translate-x-1/2 overflow-hidden rounded-md">
+<div class="progress-pointer sm:text-xl transition-all" style="width:0%">0.00%</div>
     </div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[40%] sm:-translate-y-[35%] lg:-translate-y-[40%]">
       <div class="lesson-block">
       </div>
     </div>
@@ -111,12 +111,12 @@ function addMarkupToLessonBlock(base, userWords) {
 
   lessonPage.insertAdjacentHTML(
     "beforeend",
-    `<p class="mb-8 sm:mb-28 text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-white">${engWord}</p>
-     <ul class="user-words-list-js sm:flex text-center text-white">
-     <li class="user-word-js p-1 text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[0]}</li>
-     <li class="user-word-js p-1 text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[1]}</li>
-     <li class="user-word-js p-1 text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-0 sm:mr-10">${userRandomWords[2]}</li>
-     <li class="user-word-js p-1 text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95">${userRandomWords[3]}</li>
+    `<p class="mb-8 sm:mb-10 lg:mb-28 text-3xl sm:text-4xl lg:text-5xl font-bold text-center text-white">${engWord}</p>
+     <ul class="user-words-list-js min-w-[100px] flex flex-col lg:flex-row text-center text-white">
+     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[0]}</li>
+     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[1]}</li>
+     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[2]}</li>
+     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 lg:p-4">${userRandomWords[3]}</li>
      </ul>`
   );
 
@@ -170,27 +170,27 @@ function animateGrade(result) {
     case "passed":
       setTimeout(() => {
         const lesson = document.querySelector(".lesson-wrapper-js");
-        lesson.innerHTML = `<div class="result-block-js fixed w-full flex flex-col items-center top-[20%] sm:top-[15%] left-1/2 -translate-x-1/2">
-      <h1 class="mb-10 text-3xl sm:text-4xl lg:text-6xl text-white">Congratulations!</h1>
+        lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[20%] sm:top-[15%] left-1/2 -translate-x-1/2">
+      <h1 class="mb-10 text-center text-3xl sm:text-4xl lg:text-6xl text-white">Congratulations!</h1>
       <img class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${congratulationsImg}" >
-      <p class="text-3xl lg:text-5xl text-white">You have no mistakes</p>
+      <p class="text-3xl text-center lg:text-5xl text-white">You have no mistakes</p>
       </div>`;
       }, 500);
       break;
 
     case "most":
-      console.log(wrongWordsList);
       setTimeout(() => {
         const lesson = document.querySelector(".lesson-wrapper-js");
         const mistakesMarkup = wrongWordsList
-          .map((el) => `<li>${el.userAnswer}</li>`)
+          .map((el) => `<li class="">${el.userAnswer}</li>`)
           .join("");
 
-        lesson.innerHTML = `<div class="result-block-js fixed w-full flex flex-col items-center top-[20%] sm:top-[15%] left-1/2 -translate-x-1/2">
-        <h1 class="mb-10 text-3xl sm:text-4xl lg:text-6xl text-white">It was good</h1>
+        lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[20%] sm:top-[15%] left-1/2 -translate-x-1/2">
+        <h1 class="mb-10 text-center text-3xl sm:text-4xl lg:text-6xl text-white">It was good</h1>
         <img class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${smileImg}" >
-        <p class="text-3xl lg:text-5xl text-white">But you have these mistakes</p>
-        <ul>${mistakesMarkup}</ul>
+        <p class="text-3xl text-center lg:text-5xl text-white">But you have these mistakes</p>
+        <ul class="
+        ">${mistakesMarkup}</ul>
         </div>`;
       }, 500);
       break;
@@ -202,11 +202,12 @@ function animateGrade(result) {
           .map((el) => `<li>${el.userAnswer}</li>`)
           .join("");
 
-        lesson.innerHTML = `<div class="result-block-js fixed w-full flex flex-col items-center top-[20%] sm:top-[15%] left-1/2 -translate-x-1/2">
-        <h1 class="mb-10 text-3xl sm:text-4xl lg:text-6xl text-white">You need more practice</h1>
+        lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[20%] sm:top-[15%] left-1/2 -translate-x-1/2">
+        <h1 class="mb-10 text-center text-3xl sm:text-4xl lg:text-6xl text-white">You need more practice</h1>
         <img class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${sadImg}" >
-        <p class="text-3xl lg:text-5xl text-white">These are your mistakes</p>
-        <ul>${mistakesMarkup}</ul>
+        <p class="text-3xl text-center lg:text-5xl text-white">These are your mistakes</p>
+        <ul class="
+        ">${mistakesMarkup}</ul>
         </div>`;
       }, 500);
       break;
@@ -217,15 +218,15 @@ function animateGrade(result) {
 
     resultBlock.insertAdjacentHTML(
       "beforeend",
-      `<button class="btn continue-btn-js transition-colors inline-block rounded mt-24 sm:mt-14 lg:mt-20 px-5 pb-2 pt-2.5 sm:px-6 sm:pb-2 sm:pt-2.5 lg:px-7 lg:pb-2.5 lg:pt-3 text-xl sm:text-2xl lg:text-3xl font-bold uppercase leading-normal text-neutral-50 transition opacity-0 transition-opacity duration-300 ease-in-out focus:outline-none focus:ring-0 text-white" type="button">Continue</button>`
+      `<button class="btn continue-btn-js tracking-wide transition-colors inline-block rounded mt-24 sm:mt-14 lg:mt-20 px-5 pb-2 pt-2.5 sm:px-6 sm:pb-2 sm:pt-2.5 lg:px-7 lg:pb-2.5 lg:pt-3 text-xl sm:text-2xl lg:text-3xl font-bold uppercase leading-normal text-neutral-50 transition opacity-0 transition-opacity duration-300 ease-in-out focus:outline-none focus:ring-0 text-white" type="button">Continue</button>`
     );
 
     setTimeout(() => {
-      const contBtn = resultBlock.querySelector(".continue-btn-js");
+      const continueBtn = resultBlock.querySelector(".continue-btn-js");
 
-      contBtn.classList.remove("opacity-0");
+      continueBtn.classList.remove("opacity-0");
 
-      contBtn.addEventListener("click", onContinueGrade);
+      continueBtn.addEventListener("click", onContinueGrade);
     }, 200);
   }, 1000);
 }
@@ -249,7 +250,9 @@ function updateLessonProgressBar(counter) {
   progressBar.style.width = `${value}%`;
 }
 
-function resetAllCounters() {
+function resetAllData() {
   correctWordCounter = 0;
   totalClicksOnAnswer = 0;
+  userRandomWords = undefined;
+  wrongWordsList = [];
 }
