@@ -90,7 +90,7 @@ function showEngWord(cardBody) {
 function addMarkupToLessonBlock(base, userWords) {
   const lessonPage = document.querySelector(".lesson-block");
   const engWord = base[0].engWord;
-  const userWordAnswer = base[0].userLangWord;
+  const userWordChoice = base[0].userLangWord;
   if (userRandomWords === undefined) {
     userRandomWords = userWords
       .sort((a, b) => {
@@ -99,7 +99,7 @@ function addMarkupToLessonBlock(base, userWords) {
 
         return a - b;
       })
-      .filter((el) => el !== userWordAnswer);
+      .filter((el) => el !== userWordChoice);
   }
 
   userRandomWords.sort((a, b) => {
@@ -109,7 +109,33 @@ function addMarkupToLessonBlock(base, userWords) {
     return a - b;
   });
 
-  lessonPage.insertAdjacentHTML(
+  addMarkupAnswers(lessonPage, engWord);
+  checkCorrectAnswer(userWordChoice);
+
+  const listWords = document.querySelector(".user-words-list-js");
+
+  base.splice(0, 1);
+
+  listWords.addEventListener("click", (e) => {
+    onChooseAnswer(e, engWord, userWordChoice, base);
+  });
+}
+
+function checkCorrectAnswer(userWordChoice) {
+  const possibleAnswers = Array.from(
+    document.querySelectorAll(".user-word-js")
+  ).map((el) => el.textContent);
+
+  const userAnswer = Array.from(document.querySelectorAll(".user-word-js"));
+
+  if (!possibleAnswers.includes(userWordChoice)) {
+    const randomNumber = Math.floor(Math.random() * 4);
+    userAnswer[randomNumber].textContent = userWordChoice;
+  }
+}
+
+function addMarkupAnswers(element, engWord) {
+  element.insertAdjacentHTML(
     "beforeend",
     `<p class="mb-8 sm:mb-10 lg:mb-28 text-5xl sm:text-6xl lg:text-7xl font-bold text-center text-white">${engWord}</p>
      <ul class="user-words-list-js min-w-[100px] flex flex-col lg:flex-row text-center text-white">
@@ -119,25 +145,6 @@ function addMarkupToLessonBlock(base, userWords) {
      <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 lg:p-4">${userRandomWords[3]}</li>
      </ul>`
   );
-
-  const allAnswers = Array.from(document.querySelectorAll(".user-word-js")).map(
-    (el) => el.textContent
-  );
-
-  const userLangWords = Array.from(document.querySelectorAll(".user-word-js"));
-
-  if (!allAnswers.includes(userWordAnswer)) {
-    const randomNumber = Math.floor(Math.random() * 4);
-    userLangWords[randomNumber].textContent = userWordAnswer;
-  }
-
-  const listWords = document.querySelector(".user-words-list-js");
-
-  base.splice(0, 1);
-
-  listWords.addEventListener("click", (e) => {
-    onChooseAnswer(e, engWord, userWordAnswer, base);
-  });
 }
 
 function onChooseAnswer(e, engWord, userAnswer, baseData) {
