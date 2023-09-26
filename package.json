@@ -17,6 +17,7 @@
     "notiflix": "^3.2.6",
     "reset-css": "^5.0.2",
     "svgo-loader": "^4.0.0",
+    "tippy.js": "^6.3.7",
     "vex-js-fix": "^4.1.1"
   },
   "devDependencies": {

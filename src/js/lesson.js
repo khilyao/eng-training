@@ -3,6 +3,9 @@ import { showFakeLoader } from "./app-menu";
 import congratulationsImg from "../assets/congratulations.png";
 import smileImg from "../assets/smile.png";
 import sadImg from "../assets/sad.png";
+import tippy from "tippy.js";
+import "tippy.js/dist/tippy.css";
+import "tippy.js/animations/scale-extreme.css";
 
 export function startLesson(cardName, cardBody) {
   addLessonMarkup(cardName);
@@ -139,10 +142,10 @@ function addMarkupAnswers(element, engWord) {
     "beforeend",
     `<p class="mb-8 sm:mb-10 lg:mb-28 text-5xl sm:text-6xl lg:text-7xl font-bold text-center text-white">${engWord}</p>
      <ul class="user-words-list-js min-w-[100px] flex flex-col lg:flex-row text-center text-white">
-     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[0]}</li>
-     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[1]}</li>
-     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[2]}</li>
-     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 hover:scale-105 hover:text-[#972cfb] active:scale-95 lg:p-4">${userRandomWords[3]}</li>
+     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 flex justify-center items-center hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[0]}</li>
+     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 flex justify-center items-center hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[1]}</li>
+     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 flex justify-center items-center hover:scale-105 hover:text-[#972cfb] active:scale-95 mb-4 sm:mb-6 lg:p-4 lg:mr-10 lg:mb-0">${userRandomWords[2]}</li>
+     <li class="user-word-js w-full p-2.5 bg-[#2d2599] hover:bg-[#8f88ea] focus:bg-[#8f88ea] rounded-md text-xl sm:text-2xl lg:text-3xl cursor-pointer transition-colors transition-transform transition-duration-300 flex justify-center items-center hover:scale-105 hover:text-[#972cfb] active:scale-95 lg:p-4">${userRandomWords[3]}</li>
      </ul>`
   );
 }
@@ -180,7 +183,7 @@ function animateGrade(result) {
       setTimeout(() => {
         lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[15%] left-1/2 -translate-x-1/2">
       <h1 class="mb-10 text-center text-3xl sm:text-4xl lg:text-6xl text-white">Congratulations!</h1>
-      <img class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${congratulationsImg}" >
+      <img class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${congratulationsImg}" alt="happy emoji" >
       <p class="text-3xl text-center lg:text-5xl text-white">You have no mistakes</p>
       </div>`;
       }, 500);
@@ -191,16 +194,26 @@ function animateGrade(result) {
         const mistakesMarkup = wrongWordsList
           .map(
             (el) =>
-              `<li class="bg-[#333] p-2 sm:p-3 m-1 mr-4 sm:mr-8 text-base sm:text-xl lg:text-2xl rounded text-white">${el.engWord}</li>`
+              `<li class="mistake-js bg-[#333] p-2 sm:p-3 m-1 mr-4 h-fit sm:mr-8 text-base sm:text-xl lg:text-2xl rounded text-white" data-tippy-content="${el.userAnswer}">${el.engWord}</li>`
           )
           .join("");
 
         lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[15%] left-1/2 -translate-x-1/2">
         <h1 class="mb-6 text-center text-3xl sm:text-4xl lg:text-6xl text-white">It was good</h1>
-        <img class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${smileImg}" >
+        <img class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${smileImg}" alt="smile emoji">
         <p class="mb-6 text-3xl text-center lg:text-5xl text-white">But you have these mistakes</p>
-        <ul class="mistakes-list flex flex-wrap px-2">${mistakesMarkup}</ul>
+        <ul class="mistakes-list h-[100px] sm:h-auto overflow-hidden flex justify-center flex-wrap px-2 -mr-7">${mistakesMarkup}</ul>
         </div>`;
+
+        const mistakesItems = document.querySelectorAll(".mistake-js");
+        mistakesItems.forEach((el) => {
+          el.addEventListener("mouseover", () => {
+            tippy(el, {
+              animation: "scale-extreme",
+              placement: "bottom",
+            });
+          });
+        });
       }, 500);
       break;
 
@@ -209,16 +222,27 @@ function animateGrade(result) {
         const mistakesMarkup = wrongWordsList
           .map(
             (el) =>
-              `<li class="bg-[#333] p-2 sm:p-3 m-1 mr-6 sm:mr-8 text-base sm:text-xl lg:text-2xl rounded text-white">${el.engWord}</li>`
+              `<li class="mistake-js bg-[#333] p-2 sm:p-3 m-1 mr-4 h-fit sm:mr-8 text-base sm:text-xl lg:text-2xl rounded text-white" data-tippy-content="${el.userAnswer}">${el.engWord}</li>`
           )
           .join("");
 
         lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[15%] left-1/2 -translate-x-1/2">
         <h1 class="mb-6 text-center text-3xl sm:text-4xl lg:text-6xl text-white">You need more practice</h1>
-        <img class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${sadImg}" >
+        <img class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${sadImg}" alt="sad emoji">
         <p class="mb-6 text-3xl text-center lg:text-5xl text-white">These are your mistakes</p>
-        <ul class="mistakes-list flex flex-wrap px-2">${mistakesMarkup}</ul>
+        <ul class="mistakes-list h-[100px] sm:h-auto overflow-hidden flex justify-center flex-wrap px-2 -mr-7">${mistakesMarkup}</ul>
         </div>`;
+
+        const mistakesItems = document.querySelectorAll(".mistake-js");
+
+        mistakesItems.forEach((el) => {
+          el.addEventListener("mouseover", () => {
+            tippy(el, {
+              animation: "scale-extreme",
+              placement: "bottom",
+            });
+          });
+        });
       }, 500);
       break;
   }
