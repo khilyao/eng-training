@@ -230,7 +230,7 @@ function animateGrade(result) {
         <h1 class="mb-6 text-center text-3xl sm:text-4xl lg:text-6xl text-white">You need more practice</h1>
         <img class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${sadImg}" alt="sad emoji">
         <p class="mb-6 text-3xl text-center lg:text-5xl text-white">These are your mistakes</p>
-        <ul class="mistakes-list h-[100px] sm:h-auto overflow-hidden flex justify-center flex-wrap px-2 -mr-7">${mistakesMarkup}</ul>
+        <ul class="mistakes-list max-h-[100px] sm:max-h-[120px] sm:h-auto overflow-hidden flex justify-center flex-wrap px-2 -mr-7">${mistakesMarkup}</ul>
         </div>`;
 
         const mistakesItems = document.querySelectorAll(".mistake-js");
@@ -254,7 +254,7 @@ function animateGrade(result) {
 
     resultBlock.insertAdjacentHTML(
       "beforeend",
-      `<button class="btn continue-btn-js tracking-wide transition-colors inline-block rounded mt-24 sm:mt-14 lg:mt-20 px-5 pb-2 pt-2.5 sm:px-6 sm:pb-2 sm:pt-2.5 lg:px-7 lg:pb-2.5 lg:pt-3 text-xl sm:text-2xl lg:text-3xl font-bold uppercase leading-normal text-neutral-50 transition opacity-0 transition-opacity duration-300 ease-in-out focus:outline-none focus:ring-0 text-white" type="button">Continue</button>`
+      `<button class="btn continue-btn-js tracking-wide transition-colors inline-block rounded mt-16 sm:mt-14 lg:mt-20 px-5 pb-2 pt-2.5 sm:px-6 sm:pb-2 sm:pt-2.5 lg:px-7 lg:pb-2.5 lg:pt-3 text-xl sm:text-2xl lg:text-3xl font-bold uppercase leading-normal text-neutral-50 transition opacity-0 transition-opacity duration-300 ease-in-out focus:outline-none focus:ring-0 text-white" type="button">Continue</button>`
     );
 
     if (isMistakesList) {

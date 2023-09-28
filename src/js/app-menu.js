@@ -20,7 +20,7 @@ export function appMenu() {
 
     showFakeLoader();
 
-    menuRefs.mainMenu.classList.add("hidden");
+    addHiddenClass(menuRefs.mainMenu);
 
     showSectionByDataAttr(clickedBtn);
   }
@@ -37,17 +37,17 @@ export function appMenu() {
       (el) => !el.classList.contains("hidden")
     );
 
-    currentActiveBlock.classList.add("hidden");
+    addHiddenClass(currentActiveBlock);
     const currentBlockDataAttr = Object.keys(currentActiveBlock.dataset)[0];
 
     currentActiveBlock.dataset[currentBlockDataAttr] = false;
 
-    this.classList.add("hidden");
+    addHiddenClass(this);
     $("#fakeLoader").show();
 
     setTimeout(() => {
       $("#fakeLoader").hide();
-      menuRefs.mainMenu.classList.remove("hidden");
+      removeHiddenClass(menuRefs.mainMenu);
     }, 200);
   }
 
@@ -64,9 +64,17 @@ export function appMenu() {
 
     elementToRemoveHiddenClass.dataset[dataAttr] = true;
 
-    elementToRemoveHiddenClass.classList.remove("hidden");
-    menuRefs.backBtn.classList.remove("hidden");
+    removeHiddenClass(elementToRemoveHiddenClass);
+    removeHiddenClass(menuRefs.backBtn);
   }
+}
+
+function addHiddenClass(el) {
+  el.classList.add("hidden");
+}
+
+function removeHiddenClass(el) {
+  el.classList.remove("hidden");
 }
 
 export function showFakeLoader() {
