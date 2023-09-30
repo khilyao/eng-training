@@ -14,7 +14,7 @@ export function vocabulary() {
   let formDataArray = [];
 
   formRefs.form.addEventListener("submit", onSubmit);
-  formRefs.submitBtn.addEventListener("click", onSubmitBtn);
+  formRefs.submitBtn.addEventListener("click", onAddToCardBtn);
   formRefs.saveCardBtn.addEventListener("click", onSaveCardBtn);
 
   function onSubmit(e) {
@@ -25,15 +25,21 @@ export function vocabulary() {
       .querySelector("#user-lang-word")
       .value.trim();
     const date = Date.now();
-
-    formDataArray.push({ engWord, userLangWord, date });
-
+    formDataArray.push(normalizeText(engWord, userLangWord, date));
     formRefs.form.reset();
 
     updateWordList();
   }
 
-  function onSubmitBtn() {
+  function normalizeText(...args) {
+    let [engWord, userLangWord, date] = [...args];
+    engWord = engWord[0].toUpperCase() + engWord.slice(1);
+    userLangWord = userLangWord[0].toUpperCase() + userLangWord.slice(1);
+
+    return { engWord, userLangWord, date };
+  }
+
+  function onAddToCardBtn() {
     const engWord = formRefs.form.querySelector("#eng-word").value.trim();
     const userLangWord = formRefs.form
       .querySelector("#user-lang-word")
@@ -76,8 +82,10 @@ export function vocabulary() {
       })
       .join(" ");
     const wordListLength = formDataArray.length;
+    const isWordListRefCreated =
+      Boolean(document.querySelector(".word-list")) === true;
 
-    isWordListCreated();
+    deleteWordList(isWordListRefCreated);
 
     formRefs.form.insertAdjacentHTML(
       "afterend",
@@ -87,7 +95,6 @@ export function vocabulary() {
     );
 
     const wordListRef = document.querySelector(".word-list");
-
     wordListRef.insertAdjacentHTML("beforeend", wordsMarkup);
 
     if (formDataArray.length === 1) {
@@ -99,10 +106,10 @@ export function vocabulary() {
     }
   }
 
-  function isWordListCreated() {
-    const wordListRef = document.querySelector(".word-list");
+  function deleteWordList(isWordListRefCreated) {
+    if (isWordListRefCreated) {
+      const wordListRef = document.querySelector(".word-list");
 
-    if (wordListRef) {
       wordListRef.remove();
     }
   }

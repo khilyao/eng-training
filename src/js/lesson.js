@@ -6,6 +6,8 @@ import sadImg from "../assets/sad.png";
 import tippy from "tippy.js";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale-extreme.css";
+import "tippy.js/themes/material.css";
+import "tippy.js/dist/svg-arrow.css";
 
 export function startLesson(cardName, cardBody) {
   addLessonMarkup(cardName);
@@ -194,7 +196,7 @@ function animateGrade(result) {
         const mistakesMarkup = wrongWordsList
           .map(
             (el) =>
-              `<li class="mistake-js bg-[#333] p-2 sm:p-3 m-1 mr-4 h-fit sm:mr-8 text-base sm:text-xl lg:text-2xl rounded text-white" data-tippy-content="${el.userAnswer}">${el.engWord}</li>`
+              `<li class="mistake-js bg-[#fb8f8f] p-2 sm:p-3 m-1 mr-4 h-fit sm:mr-8 text-base sm:text-xl lg:text-2xl rounded-lg transition-transform transition-duration-300 ease-linear hover:scale-105 focus:scale-105" data-tippy-content="${el.userAnswer}">${el.engWord}</li>`
           )
           .join("");
 
@@ -202,18 +204,11 @@ function animateGrade(result) {
         <h1 class="mb-6 text-center text-3xl sm:text-4xl lg:text-6xl text-white">It was good</h1>
         <img class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${smileImg}" alt="smile emoji">
         <p class="mb-6 text-3xl text-center lg:text-5xl text-white">But you have these mistakes</p>
-        <ul class="mistakes-list h-[100px] sm:h-auto overflow-hidden flex justify-center flex-wrap px-2 -mr-7">${mistakesMarkup}</ul>
+        <ul class="mistakes-list h-[100px] sm:h-auto overflow-hidden flex justify-center flex-wrap px-2 -mr-3">${mistakesMarkup}</ul>
         </div>`;
 
         const mistakesItems = document.querySelectorAll(".mistake-js");
-        mistakesItems.forEach((el) => {
-          el.addEventListener("mouseover", () => {
-            tippy(el, {
-              animation: "scale-extreme",
-              placement: "bottom",
-            });
-          });
-        });
+        getCorrectAnswerOnHover(mistakesItems);
       }, 500);
       break;
 
@@ -222,7 +217,7 @@ function animateGrade(result) {
         const mistakesMarkup = wrongWordsList
           .map(
             (el) =>
-              `<li class="mistake-js bg-[#333] p-2 sm:p-3 m-1 mr-4 h-fit sm:mr-8 text-base sm:text-xl lg:text-2xl rounded text-white" data-tippy-content="${el.userAnswer}">${el.engWord}</li>`
+              `<li class="mistake-js bg-[#fb8f8f] p-2 sm:p-3 m-1 mr-4 h-fit sm:mr-8 text-base sm:text-xl lg:text-2xl rounded-lg transition-transform transition-duration-300 ease-linear hover:scale-105 focus:scale-105" data-tippy-content="${el.userAnswer}">${el.engWord}</li>`
           )
           .join("");
 
@@ -234,15 +229,7 @@ function animateGrade(result) {
         </div>`;
 
         const mistakesItems = document.querySelectorAll(".mistake-js");
-
-        mistakesItems.forEach((el) => {
-          el.addEventListener("mouseover", () => {
-            tippy(el, {
-              animation: "scale-extreme",
-              placement: "bottom",
-            });
-          });
-        });
+        getCorrectAnswerOnHover(mistakesItems);
       }, 500);
       break;
   }
@@ -273,14 +260,33 @@ function animateGrade(result) {
   }, 1000);
 }
 
+function getCorrectAnswerOnHover(listErrors) {
+  listErrors.forEach((el) => {
+    el.addEventListener("mouseover", () => {
+      tippy(el, {
+        theme: "material",
+        animation: "scale-extreme",
+        placement: "bottom",
+      });
+    });
+  });
+}
+
 function onContinueGrade() {
   const lessonWrapper = document.querySelector(".lesson-wrapper-js");
+
+  setResultToProgressLocalStrg();
 
   lessonWrapper.remove();
   showFakeLoader();
 
   const appMenu = document.querySelector(".menu-js");
   appMenu.classList.remove("hidden");
+}
+
+function setResultToProgressLocalStrg() {
+  // localStorage.getItem("");
+  // localStorage.setItem("");
 }
 
 function updateLessonProgressBar(counter) {

@@ -19,9 +19,7 @@ export function appMenu() {
     const clickedBtn = e.target;
 
     showFakeLoader();
-
     addHiddenClass(menuRefs.mainMenu);
-
     showSectionByDataAttr(clickedBtn);
   }
 

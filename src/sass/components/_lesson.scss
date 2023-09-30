@@ -15,6 +15,16 @@
   transition: width 800ms ease;
 }
 
+.tippy-box[data-theme~="material"] {
+  background-color: #40d636 !important;
+  color: rgb(3, 9, 8);
+  letter-spacing: 0.03em;
+}
+
+.tippy-arrow::before {
+  border-bottom-color: #40d636 !important;
+}
+
 .user-word-js {
   box-shadow: 0px 4px 6px rgba(45, 37, 153, 0.5),
     0px 1px 3px rgba(45, 37, 153, 0.48);
