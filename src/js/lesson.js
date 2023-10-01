@@ -75,6 +75,10 @@ function showEngWord(cardBody) {
   const userWords = base.map((el) => el.userLangWord);
 
   if (base.length === 0) {
+    setTimeout(() => {
+      showFakeLoader(300);
+    }, 500);
+
     if (wrongWordsList.length === 0) {
       animateGrade("passed");
       return;
@@ -185,7 +189,7 @@ function animateGrade(result) {
       setTimeout(() => {
         lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[15%] left-1/2 -translate-x-1/2">
       <h1 class="mb-10 text-center text-3xl sm:text-4xl lg:text-6xl text-white">Congratulations!</h1>
-      <img class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${congratulationsImg}" alt="happy emoji" >
+      <img id="img-result" class="mb-10 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${congratulationsImg}" alt="happy emoji" >
       <p class="text-3xl text-center lg:text-5xl text-white">You have no mistakes</p>
       </div>`;
       }, 500);
@@ -202,7 +206,7 @@ function animateGrade(result) {
 
         lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[15%] left-1/2 -translate-x-1/2">
         <h1 class="mb-6 text-center text-3xl sm:text-4xl lg:text-6xl text-white">It was good</h1>
-        <img class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${smileImg}" alt="smile emoji">
+        <img id="img-result" class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${smileImg}" alt="smile emoji">
         <p class="mb-6 text-3xl text-center lg:text-5xl text-white">But you have these mistakes</p>
         <ul class="mistakes-list h-[100px] sm:h-auto overflow-hidden flex justify-center flex-wrap px-2 -mr-3">${mistakesMarkup}</ul>
         </div>`;
@@ -217,13 +221,13 @@ function animateGrade(result) {
         const mistakesMarkup = wrongWordsList
           .map(
             (el) =>
-              `<li class="mistake-js bg-[#fb8f8f] p-2 sm:p-3 m-1 mr-4 h-fit sm:mr-8 text-base sm:text-xl lg:text-2xl rounded-lg transition-transform transition-duration-300 ease-linear hover:scale-105 focus:scale-105" data-tippy-content="${el.userAnswer}">${el.engWord}</li>`
+              `<li class="mistake-js bg-[#ff4e4e] p-2 sm:p-3 m-1 mr-4 h-fit sm:mr-8 text-base sm:text-xl lg:text-2xl rounded-lg transition-transform transition-duration-300 ease-linear hover:scale-105 focus:scale-105" data-tippy-content="${el.userAnswer}">${el.engWord}</li>`
           )
           .join("");
 
         lesson.innerHTML = `<div class="result-block-js px-2.5 fixed w-full flex flex-col items-center top-[15%] left-1/2 -translate-x-1/2">
         <h1 class="mb-6 text-center text-3xl sm:text-4xl lg:text-6xl text-white">You need more practice</h1>
-        <img class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${sadImg}" alt="sad emoji">
+        <img id="img-result" class="mb-6 sm:mb-12 lg:mb-16 w-[150px] sm:w-[180px] lg:w-[200px]" src="${sadImg}" alt="sad emoji">
         <p class="mb-6 text-3xl text-center lg:text-5xl text-white">These are your mistakes</p>
         <ul class="mistakes-list max-h-[100px] sm:max-h-[120px] sm:h-auto overflow-hidden flex justify-center flex-wrap px-2 -mr-7">${mistakesMarkup}</ul>
         </div>`;
@@ -256,7 +260,7 @@ function animateGrade(result) {
       continueBtn.classList.remove("opacity-0");
 
       continueBtn.addEventListener("click", onContinueGrade);
-    }, 200);
+    }, 300);
   }, 1000);
 }
 
@@ -284,9 +288,23 @@ function onContinueGrade() {
   appMenu.classList.remove("hidden");
 }
 
-function setResultToProgressLocalStrg() {
-  // localStorage.getItem("");
-  // localStorage.setItem("");
+function setResultToProgressLocalStrg(cardName) {
+  const finishLessonDate = parseDate();
+  const grade = defineLessonResult();
+  const jsonData = JSON.stringify([finishLessonDate, grade]);
+}
+
+function defineLessonResult() {
+  const imgResultAltValue = document.getElementById("img-result").alt;
+  return imgResultAltValue.split(" ")[0];
+}
+
+function parseDate() {
+  const date = new Date();
+  const dateString = date.toDateString();
+  const timeString = date.toTimeString().slice(0, 8);
+
+  return dateString + timeString;
 }
 
 function updateLessonProgressBar(counter) {

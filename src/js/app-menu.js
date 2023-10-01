@@ -75,9 +75,9 @@ function removeHiddenClass(el) {
   el.classList.remove("hidden");
 }
 
-export function showFakeLoader() {
+export function showFakeLoader(delay = 200) {
   $("#fakeLoader").show();
   setTimeout(() => {
     $("#fakeLoader").hide();
-  }, 200);
+  }, delay);
 }

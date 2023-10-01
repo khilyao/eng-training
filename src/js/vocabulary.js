@@ -54,6 +54,7 @@ export function vocabulary() {
       });
     }
 
+    scrollToTop();
     firstInput.focus();
   }
 
@@ -223,6 +224,13 @@ export function vocabulary() {
         clickToClose: true,
       });
     }
+  }
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Добавляем плавную анимацию
+    });
   }
 
   function addErrorMarkupParagraph() {

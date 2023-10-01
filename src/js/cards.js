@@ -105,11 +105,9 @@ export function cards() {
   function generateCardsMarkup() {
     const cards = removeInfoItemsFromLocalStrg();
 
-    const cardsMarkup = cards.map((el) => {
+    return cards.map((el) => {
       return { name: el[0] };
     });
-
-    return cardsMarkup;
   }
 
   function removeInfoItemsFromLocalStrg() {
