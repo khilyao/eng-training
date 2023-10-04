@@ -8,6 +8,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale-extreme.css";
 import "tippy.js/themes/material.css";
 import "tippy.js/dist/svg-arrow.css";
+import { backBtn } from "./components/back-btn";
 
 export function startLesson(cardName, cardBody) {
   addLessonMarkup(cardName);
@@ -20,8 +21,7 @@ let totalClicksOnAnswer = 0;
 let userRandomWords;
 let wrongWordsList = [];
 
-const backBtnRef = document.querySelector(".btn-back-js");
-backBtnRef.addEventListener("click", onBackBtn);
+backBtn.refs.btn.addEventListener("click", onBackBtn);
 
 function onBackBtn() {
   const menuTemplateRefs = [
@@ -35,6 +35,7 @@ function onBackBtn() {
         if (value) {
           const lessonWrapper = document.querySelector(".lesson-wrapper-js");
 
+          backBtn.hide();
           menuTemplateRefs[0].classList.remove("hidden");
           showFakeLoader();
           removeLessonMarkup(lessonWrapper);
@@ -183,6 +184,7 @@ function clearLessonBlock(block) {
 
 function animateGrade(result) {
   const lesson = document.querySelector(".lesson-wrapper-js");
+  backBtn.hide();
 
   switch (result) {
     case "passed":

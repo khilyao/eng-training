@@ -1,4 +1,5 @@
 const vex = require("vex-js-fix");
+import { backBtn } from "./components/back-btn";
 
 export function appMenu() {
   const menuRefs = {
@@ -6,12 +7,11 @@ export function appMenu() {
     startBtn: document.querySelector(".btn-start-js"),
     vocabularyBtn: document.querySelector(".btn-vocabulary-js"),
     progressBtn: document.querySelector(".btn-progress-js"),
-    backBtn: document.querySelector(".btn-back-js"),
   };
 
   menuRefs.mainMenu.addEventListener("click", onMenuBtn);
 
-  menuRefs.backBtn.addEventListener("click", onBackBtn);
+  backBtn.refs.btn.addEventListener("click", onBackBtn);
 
   function onMenuBtn(e) {
     if (e.target.nodeName !== "BUTTON") return;
@@ -63,7 +63,7 @@ export function appMenu() {
     elementToRemoveHiddenClass.dataset[dataAttr] = true;
 
     removeHiddenClass(elementToRemoveHiddenClass);
-    removeHiddenClass(menuRefs.backBtn);
+    backBtn.show();
   }
 }
 

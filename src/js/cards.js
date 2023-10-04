@@ -1,5 +1,6 @@
 import List from "list.js";
 import { startLesson, finishLesson } from "./lesson.js";
+import { backBtn } from "./components/back-btn";
 
 var options = {
   valueNames: ["name"],
@@ -12,9 +13,7 @@ export function cards() {
   const refs = {
     list: document.querySelector(".cards-list-js"),
     mainBlock: document.querySelector(".main-block-js"),
-
     startBtn: document.querySelector(".btn-start-js"),
-    backBtn: document.querySelector(".btn-back-js"),
   };
 
   refs.startBtn.addEventListener("click", onStartBtn);
