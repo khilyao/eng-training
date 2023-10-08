@@ -229,7 +229,7 @@ export function vocabulary() {
   function scrollToTop() {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // Добавляем плавную анимацию
+      behavior: "smooth",
     });
   }
 
