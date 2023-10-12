@@ -11,3 +11,9 @@
 .modal-error {
   text-shadow: none;
 }
+
+.word-item-btn {
+  .word-item:hover & {
+    opacity: 1;
+  }
+}

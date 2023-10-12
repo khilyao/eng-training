@@ -1,5 +1,6 @@
 import Notiflix from "notiflix";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
+import closeSvg from "../assets/close.svg";
 
 const vex = require("vex-js-fix");
 
@@ -79,7 +80,11 @@ export function vocabulary() {
       .sort((a, b) => a.date - b.date)
       .reverse()
       .map((el) => {
-        return `<div class="word-item inline-block rounded px-2.5 py-2.5 mx-1.5 my-1.5 text-white text-sm">${el.engWord}</div>`;
+        return `<div class="word-item relative inline-block rounded px-2.5 py-2.5 mx-1.5 my-1.5 text-white text-sm">
+         <button class="word-item-btn absolute p-0.5 bg-[#d4d4d4] top-0 right-0 translate-x-1/2 -translate-y-1/2 opacity-0 border border-neutral-500 rounded-[50%] hover:scale-110 transition duration-100 ease-linear" type="button">
+         <svg class="w-[10px] h-[10px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px"><path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"/></svg>
+         </button>
+          <p>${el.engWord}</p></div>`;
       })
       .join(" ");
     const wordListLength = formDataArray.length;
@@ -97,6 +102,8 @@ export function vocabulary() {
 
     const wordListRef = document.querySelector(".word-list");
     wordListRef.insertAdjacentHTML("beforeend", wordsMarkup);
+
+    addListenerToRemoveWord();
 
     if (formDataArray.length === 1) {
       notifyUserAboutMinCountCards();
@@ -123,6 +130,36 @@ export function vocabulary() {
         clickToClose: true,
       }
     );
+  }
+
+  function addListenerToRemoveWord() {
+    const wordList = document.querySelector(".word-list");
+
+    wordList.addEventListener("click", onRemoveWord);
+  }
+
+  function onRemoveWord(e) {
+    const el = e.target;
+
+    if (
+      el.nodeName === "svg" ||
+      el.nodeName === "path" ||
+      el.nodeName === "BUTTON"
+    ) {
+      const word = el.parentElement.textContent.trim();
+
+      removeWordFromList(el);
+      removeSavedWord(word);
+    }
+  }
+
+  function removeWordFromList(el) {
+    el.parentElement.remove();
+  }
+
+  function removeSavedWord(word) {
+    console.log(word);
+    formDataArray.find((el) => el["engWord"] === word);
   }
 
   function notifyUserAboutMinCountCards() {
