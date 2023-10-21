@@ -81,10 +81,11 @@ export function vocabulary() {
       .reverse()
       .map((el) => {
         return `<div class="word-item relative inline-block rounded px-2.5 py-2.5 mx-1.5 my-1.5 text-white text-sm">
-         <button class="word-item-btn absolute p-0.5 bg-[#d4d4d4] top-0 right-0 translate-x-1/2 -translate-y-1/2 opacity-0 border border-neutral-500 rounded-[50%] hover:scale-110 transition duration-100 ease-linear" type="button">
-         <svg class="w-[10px] h-[10px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px"><path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"/></svg>
-         </button>
-          <p>${el.engWord}</p></div>`;
+        <button class="word-item-btn absolute p-0.5 bg-[#d4d4d4] top-0 right-0 translate-x-1/2 -translate-y-1/2 opacity-0 border border-neutral-500 rounded-[50%] hover:scale-110 transition duration-100 ease-linear" type="button">
+          <svg class="w-[10px] h-[10px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50px" height="50px"><path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"/></svg>
+        </button>
+          <p class="word-paragraph">${el.engWord}</p>
+        </div>`;
       })
       .join(" ");
     const wordListLength = formDataArray.length;
@@ -96,14 +97,13 @@ export function vocabulary() {
     formRefs.form.insertAdjacentHTML(
       "afterend",
       `<div class="word-list max-w-[400px] max-h-[200px] overflow-hidden px-5 pt-8 pb-5 -mx-1.5 -my-1.5 relative text-white w-full rounded-lg bg-fff">
-        <div class="absolute top-2.5 left-5 mb-1 text-white">Card length: ${wordListLength}</div>
+        <div class="card-length absolute top-2.5 left-5 mb-1 text-white">Card length: ${wordListLength}</div>
       </div>`
     );
 
     const wordListRef = document.querySelector(".word-list");
     wordListRef.insertAdjacentHTML("beforeend", wordsMarkup);
-
-    addListenerToRemoveWord();
+    wordListRef.addEventListener("click", onRemoveWord);
 
     if (formDataArray.length === 1) {
       notifyUserAboutMinCountCards();
@@ -132,34 +132,54 @@ export function vocabulary() {
     );
   }
 
-  function addListenerToRemoveWord() {
-    const wordList = document.querySelector(".word-list");
-
-    wordList.addEventListener("click", onRemoveWord);
-  }
-
   function onRemoveWord(e) {
     const el = e.target;
 
-    if (
-      el.nodeName === "svg" ||
-      el.nodeName === "path" ||
-      el.nodeName === "BUTTON"
-    ) {
+    if (el.nodeName === "BUTTON") {
       const word = el.parentElement.textContent.trim();
 
-      removeWordFromList(el);
       removeSavedWord(word);
+      removeWordFromList(el);
+    }
+
+    if (el.nodeName === "svg") {
+      const button = el.parentElement;
+      const word = button.parentElement.textContent.trim();
+
+      removeSavedWord(word);
+      removeWordFromList(button);
+    }
+    if (el.nodeName === "path") {
+      const svg = el.parentElement;
+      const button = svg.parentElement;
+      const word = button.parentElement.textContent.trim();
+
+      removeSavedWord(word);
+      removeWordFromList(button);
     }
   }
 
   function removeWordFromList(el) {
     el.parentElement.remove();
+    updateCardLength();
+  }
+
+  function updateCardLength() {
+    const wordListRef = document.querySelector(".word-list");
+
+    if (formDataArray.length === 0) {
+      wordListRef.remove();
+      return;
+    }
+
+    const cardLengthEl = wordListRef.querySelector(".card-length");
+    cardLengthEl.textContent = `Card length: ${formDataArray.length}`;
   }
 
   function removeSavedWord(word) {
-    console.log(word);
-    formDataArray.find((el) => el["engWord"] === word);
+    const indexEl = formDataArray.findIndex((el) => el["engWord"] === word);
+
+    formDataArray.splice(indexEl, 1);
   }
 
   function notifyUserAboutMinCountCards() {
